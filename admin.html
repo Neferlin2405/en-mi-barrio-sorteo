@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EN MI BARRIO - Panel Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0a0a0a; color: #ddd; font-family: 'Inter', sans-serif;
+            min-height: 100vh; padding: 20px;
+        }
+        .header {
+            text-align: center; padding: 20px 0 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 30px;
+        }
+        .header h1 {
+            font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem;
+            letter-spacing: 4px; color: #eee;
+        }
+        .header p { color: #666; font-size: 0.85rem; margin-top: 5px; }
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px; margin-bottom: 30px;
+        }
+        .stat-card {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+            padding: 20px; border-radius: 10px; text-align: center; transition: border-color 0.3s;
+        }
+        .stat-card:hover { border-color: rgba(255,255,255,0.2); }
+        .stat-value {
+            font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: #eee; line-height: 1;
+        }
+        .stat-label { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 2px; margin-top: 8px; }
+        .stat-card.highlight { border-color: rgba(200,150,50,0.3); background: rgba(200,150,50,0.03); }
+        .stat-card.highlight .stat-value { color: #c89632; }
+        .filters {
+            display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;
+            padding: 15px; background: rgba(255,255,255,0.02); border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .filter-btn {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            color: #888; padding: 8px 16px; border-radius: 6px; cursor: pointer;
+            font-family: 'Inter', sans-serif; font-size: 0.8rem; transition: all 0.2s;
+        }
+        .filter-btn:hover { background: rgba(255,255,255,0.1); color: #ddd; }
+        .filter-btn.active { background: rgba(255,255,255,0.15); color: #eee; border-color: rgba(255,255,255,0.25); }
+        .search-box {
+            flex: 1; min-width: 200px; background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1); color: #ddd;
+            padding: 8px 14px; border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 0.85rem;
+        }
+        .search-box::placeholder { color: #555; }
+        .search-box:focus { outline: none; border-color: rgba(255,255,255,0.3); }
+        .export-bar {
+            display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 15px;
+        }
+        .export-btn {
+            background: rgba(200,150,50,0.1); border: 1px solid rgba(200,150,50,0.3);
+            color: #c89632; padding: 8px 18px; border-radius: 6px; cursor: pointer;
+            font-family: 'Inter', sans-serif; font-size: 0.8rem; transition: all 0.2s;
+        }
+        .export-btn:hover { background: rgba(200,150,50,0.2); }
+        .table-container {
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px; overflow: hidden;
+        }
+        .table-header {
+            display: grid; grid-template-columns: 40px 1.5fr 1.5fr 1fr 1fr 1fr 100px;
+            gap: 10px; padding: 12px 16px;
+            background: rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.08);
+            font-size: 0.7rem; color: #666; text-transform: uppercase; letter-spacing: 2px;
+        }
+        .table-row {
+            display: grid; grid-template-columns: 40px 1.5fr 1.5fr 1fr 1fr 1fr 100px;
+            gap: 10px; padding: 12px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            font-size: 0.85rem; color: #bbb; align-items: center; transition: background 0.2s;
+        }
+        .table-row:hover { background: rgba(255,255,255,0.03); }
+        .table-row.has-number { border-left: 3px solid rgba(200,150,50,0.5); }
+        .table-row.no-number { border-left: 3px solid rgba(100,100,100,0.3); opacity: 0.7; }
+        .cell-numero { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; color: #c89632; }
+        .cell-esquina { font-family: 'Bebas Neue', sans-serif; color: #aaa; }
+        .cell-aka { font-weight: 600; color: #ddd; }
+        .cell-instagram { color: #888; }
+        .cell-celular { color: #666; font-family: monospace; font-size: 0.8rem; }
+        .cell-fecha { color: #555; font-size: 0.75rem; }
+        .badge {
+            display: inline-block; padding: 3px 10px; border-radius: 4px;
+            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .badge-sorteado { background: rgba(200,150,50,0.15); color: #c89632; border: 1px solid rgba(200,150,50,0.3); }
+        .badge-pendiente { background: rgba(100,100,100,0.1); color: #666; border: 1px solid rgba(100,100,100,0.2); }
+        .pagination { display: flex; justify-content: center; gap: 5px; margin-top: 20px; }
+        .page-btn {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            color: #888; padding: 6px 12px; border-radius: 5px; cursor: pointer;
+            font-size: 0.8rem; transition: all 0.2s;
+        }
+        .page-btn:hover { background: rgba(255,255,255,0.1); color: #ddd; }
+        .page-btn.active { background: rgba(255,255,255,0.15); color: #eee; }
+        .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+        .loading { text-align: center; padding: 60px 20px; color: #555; }
+        .loading-spinner {
+            width: 40px; height: 40px; border: 2px solid rgba(255,255,255,0.1);
+            border-top-color: #c89632; border-radius: 50%;
+            animation: spin 1s linear infinite; margin: 0 auto 15px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .refresh-btn {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            color: #888; padding: 8px 16px; border-radius: 6px; cursor: pointer;
+            font-size: 0.8rem; margin-bottom: 15px; transition: all 0.2s;
+        }
+        .refresh-btn:hover { background: rgba(255,255,255,0.1); color: #ddd; }
+        @media (max-width: 768px) {
+            .table-header, .table-row { grid-template-columns: 30px 1fr 1fr 80px; }
+            .cell-instagram, .cell-celular, .cell-fecha { display: none; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>PANEL DE ADMINISTRACIÓN</h1>
+        <p>EN MI BARRIO - Sorteo Documental Freestyle Perú</p>
+    </div>
+
+    <div style="text-align:center; margin-bottom:20px;">
+        <button class="refresh-btn" onclick="cargarDatos()">🔄 Actualizar datos</button>
+    </div>
+
+    <div class="stats-grid" id="statsGrid">
+        <div class="loading" style="grid-column: 1 / -1;">
+            <div class="loading-spinner"></div>
+            <p>Cargando datos desde Google Sheets...</p>
+        </div>
+    </div>
+
+    <div class="filters" id="filters" style="display:none;">
+        <button class="filter-btn active" onclick="filtrar('todos')">Todos</button>
+        <button class="filter-btn" onclick="filtrar('sorteados')">Sorteados</button>
+        <button class="filter-btn" onclick="filtrar('pendientes')">Pendientes</button>
+        <input type="text" class="search-box" id="searchBox" placeholder="Buscar por AKA, Instagram o celular..." oninput="buscar(this.value)">
+    </div>
+
+    <div class="export-bar" id="exportBar" style="display:none;">
+        <button class="export-btn" onclick="exportarCSV()">📥 Exportar CSV</button>
+        <button class="export-btn" onclick="exportarJSON()">📥 Exportar JSON</button>
+    </div>
+
+    <div class="table-container" id="tableContainer">
+        <div class="loading">
+            <div class="loading-spinner"></div>
+            <p>Conectando con Google Sheets...</p>
+        </div>
+    </div>
+
+    <div class="pagination" id="pagination"></div>
+
+    <script>
+        // ============================================
+        // CONFIGURACIÓN GOOGLE SHEETS
+        // ============================================
+        const API_URL = "https://script.google.com/macros/s/AKfycbwAaxdVpFW_M5atX1BqAQJKwttKUFQkXoXZki626bJ3n45pxMtxze7BITXLu6Ro1vcbkQ/exec";
+
+        let todosLosDatos = [];
+        let datosFiltrados = [];
+        let paginaActual = 1;
+        const itemsPorPagina = 20;
+        let filtroActual = 'todos';
+
+        // ====== CARGAR DATOS ======
+        async function cargarDatos() {
+            document.getElementById('statsGrid').innerHTML = `
+                <div class="loading" style="grid-column: 1 / -1;">
+                    <div class="loading-spinner"></div>
+                    <p>Cargando datos desde Google Sheets...</p>
+                </div>`;
+            document.getElementById('tableContainer').innerHTML = `
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <p>Conectando...</p>
+                </div>`;
+
+            try {
+                const resp = await fetch(API_URL, { method: "GET", mode: "cors" });
+                const data = await resp.json();
+
+                if (!data.success) throw new Error(data.error || "Error desconocido");
+
+                todosLosDatos = data.participantes || [];
+
+                // Ordenar: sorteados primero, luego por fecha
+                todosLosDatos.sort((a, b) => {
+                    const aNum = a.numero ? 1 : 0;
+                    const bNum = b.numero ? 1 : 0;
+                    if (aNum !== bNum) return bNum - aNum;
+                    return new Date(b.fecha || 0) - new Date(a.fecha || 0);
+                });
+
+                datosFiltrados = [...todosLosDatos];
+                mostrarStats();
+                mostrarTabla();
+                document.getElementById('filters').style.display = 'flex';
+                document.getElementById('exportBar').style.display = 'flex';
+
+            } catch (e) {
+                console.error(e);
+                document.getElementById('statsGrid').innerHTML = `
+                    <div class="loading" style="grid-column: 1 / -1;">
+                        <p style="color:#c44;">❌ Error de conexión con Google Sheets</p>
+                        <p style="font-size:0.8rem; margin-top:10px;">${e.message}</p>
+                        <button class="refresh-btn" onclick="cargarDatos()" style="margin-top:15px;">Reintentar</button>
+                    </div>`;
+                document.getElementById('tableContainer').innerHTML = '';
+            }
+        }
+
+        // ====== ESTADÍSTICAS ======
+        function mostrarStats() {
+            const total = todosLosDatos.length;
+            const sorteados = todosLosDatos.filter(d => d.numero).length;
+            const pendientes = total - sorteados;
+
+            document.getElementById('statsGrid').innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-value">${total}</div>
+                    <div class="stat-label">Total Registrados</div>
+                </div>
+                <div class="stat-card highlight">
+                    <div class="stat-value">${sorteados}</div>
+                    <div class="stat-label">Ya Sortearon</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${pendientes}</div>
+                    <div class="stat-label">Pendientes</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${total > 0 ? Math.round((sorteados/total)*100) : 0}%</div>
+                    <div class="stat-label">Participación</div>
+                </div>
+            `;
+        }
+
+        // ====== TABLA ======
+        function mostrarTabla() {
+            const inicio = (paginaActual - 1) * itemsPorPagina;
+            const fin = inicio + itemsPorPagina;
+            const paginaDatos = datosFiltrados.slice(inicio, fin);
+
+            let html = `
+                <div class="table-header">
+                    <div>#</div>
+                    <div>AKA</div>
+                    <div>Instagram</div>
+                    <div>Celular</div>
+                    <div>Número</div>
+                    <div>Esquina</div>
+                    <div>Estado</div>
+                </div>
+            `;
+
+            if (paginaDatos.length === 0) {
+                html += `<div class="table-row" style="justify-content:center; padding:30px;"><span style="color:#555;">No hay registros</span></div>`;
+            } else {
+                paginaDatos.forEach((d, i) => {
+                    const idx = inicio + i + 1;
+                    const tieneNumero = !!d.numero;
+                    html += `
+                        <div class="table-row ${tieneNumero ? 'has-number' : 'no-number'}">
+                            <div style="color:#555; font-size:0.75rem;">${idx}</div>
+                            <div class="cell-aka">${d.aka || ''}</div>
+                            <div class="cell-instagram">${d.instagram || ''}</div>
+                            <div class="cell-celular">${d.celular || ''}</div>
+                            <div class="cell-numero">${d.numero || '-'}</div>
+                            <div class="cell-esquina">${d.esquina || '-'}</div>
+                            <div>
+                                <span class="badge ${tieneNumero ? 'badge-sorteado' : 'badge-pendiente'}">
+                                    ${tieneNumero ? 'Sorteado' : 'Pendiente'}
+                                </span>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            document.getElementById('tableContainer').innerHTML = html;
+            mostrarPaginacion();
+        }
+
+        // ====== PAGINACIÓN ======
+        function mostrarPaginacion() {
+            const totalPaginas = Math.ceil(datosFiltrados.length / itemsPorPagina);
+            if (totalPaginas <= 1) { document.getElementById('pagination').innerHTML = ''; return; }
+
+            let html = '';
+            html += `<button class="page-btn" onclick="cambiarPagina(${paginaActual - 1})" ${paginaActual === 1 ? 'disabled' : ''}>←</button>`;
+            for (let i = 1; i <= totalPaginas; i++) {
+                if (i === 1 || i === totalPaginas || (i >= paginaActual - 1 && i <= paginaActual + 1)) {
+                    html += `<button class="page-btn ${i === paginaActual ? 'active' : ''}" onclick="cambiarPagina(${i})">${i}</button>`;
+                } else if (i === paginaActual - 2 || i === paginaActual + 2) {
+                    html += `<span style="color:#555; padding:6px;">...</span>`;
+                }
+            }
+            html += `<button class="page-btn" onclick="cambiarPagina(${paginaActual + 1})" ${paginaActual === totalPaginas ? 'disabled' : ''}>→</button>`;
+            document.getElementById('pagination').innerHTML = html;
+        }
+
+        function cambiarPagina(p) { paginaActual = p; mostrarTabla(); }
+
+        // ====== FILTROS ======
+        function filtrar(tipo) {
+            filtroActual = tipo;
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (tipo === 'todos') datosFiltrados = [...todosLosDatos];
+            else if (tipo === 'sorteados') datosFiltrados = todosLosDatos.filter(d => d.numero);
+            else if (tipo === 'pendientes') datosFiltrados = todosLosDatos.filter(d => !d.numero);
+
+            paginaActual = 1;
+            mostrarTabla();
+        }
+
+        function buscar(q) {
+            const query = q.toLowerCase().trim();
+            if (!query) { filtrar(filtroActual); return; }
+            datosFiltrados = todosLosDatos.filter(d =>
+                (d.aka && d.aka.toLowerCase().includes(query)) ||
+                (d.instagram && d.instagram.toLowerCase().includes(query)) ||
+                (d.celular && d.celular.includes(query)) ||
+                (d.numero && d.numero.toString().includes(query))
+            );
+            paginaActual = 1;
+            mostrarTabla();
+        }
+
+        // ====== EXPORTAR ======
+        function exportarCSV() {
+            const headers = ['AKA', 'Instagram', 'Celular', 'Numero', 'Esquina', 'FechaRegistro', 'FechaSorteo'];
+            const rows = datosFiltrados.map(d => [
+                d.aka || '', d.instagram || '', d.celular || '',
+                d.numero || '', d.esquina || '',
+                d.fecha || '', d.fechaSorteo || ''
+            ]);
+            let csv = headers.join(',') + '\n';
+            rows.forEach(r => { csv += r.map(v => `"${v}"`).join(',') + '\n'; });
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `participantes-en-mi-barrio-${new Date().toISOString().split('T')[0]}.csv`;
+            link.click();
+        }
+
+        function exportarJSON() {
+            const blob = new Blob([JSON.stringify(datosFiltrados, null, 2)], { type: 'application/json' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `participantes-en-mi-barrio-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+        }
+
+        // Iniciar
+        cargarDatos();
+    </script>
+</body>
+</html>
