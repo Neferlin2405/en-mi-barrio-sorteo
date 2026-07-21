@@ -373,7 +373,7 @@
                 const resp = await fetch(API_URL, {
                     method: "POST",
                     mode: "cors",
-                    headers: { "Content-Type": "application/json" },
+                    headers: { "Content-Type": "text/plain" },
                     body: JSON.stringify({ aka, instagram, celular, numero: null, esquina: null, fechaSorteo: null })
                 });
                 const data = await resp.json();
@@ -489,7 +489,7 @@
                     try {
                         await fetch(API_URL, {
                             method: "POST", mode: "cors",
-                            headers: { "Content-Type": "application/json" },
+                            headers: { "Content-Type": "text/plain" },
                             body: JSON.stringify(usuarioActual)
                         });
                     } catch(e) { console.error("Error guardando en Sheets:", e); }
