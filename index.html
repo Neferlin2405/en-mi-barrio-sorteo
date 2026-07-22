@@ -3,21 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EN MI BARRIO - Sorteo</title>
-    <meta name="description" content="Sorteo del documental de freestyle peruano EN MI BARRIO. ¡Regístrate y genera tu número de barrio!">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎤</text></svg>">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Permanent+Marker&display=swap" rel="stylesheet">
+    <title>EN MI BARRIO - Homenaje a Wagner "Barraka"</title>
+    <meta name="description" content="Homenaje a Wagner Barraka - Acertijo del documental EN MI BARRIO">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕊️</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Permanent+Marker&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            background: #111111; min-height: 100vh; display: flex;
-            flex-direction: column; align-items: center; justify-content: center;
-            font-family: 'Bebas Neue', sans-serif; overflow-x: hidden;
-            position: relative; color: #ddd;
+            background: #111111;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Bebas Neue', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+            color: #ddd;
         }
+
+        /* ====== FONDO CON FOTO DE BARRAKA ====== */
+        .barraka-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 2.5s ease;
+            background-image: url('AQUI_PONES_EL_LINK_DE_LA_FOTO.jpg'); /* REEMPLAZA ESTO CON LA FOTO REAL */
+            background-size: cover;
+            background-position: center top;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .barraka-bg.active {
+            opacity: 0.3; /* Ajusta la opacidad de la foto aquí */
+        }
+        .barraka-bg::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(17,17,17,0.4) 0%,
+                rgba(17,17,17,0.7) 40%,
+                rgba(17,17,17,0.95) 80%,
+                rgba(17,17,17,1) 100%
+            );
+        }
+
+        /* ====== EFECTOS VHS ====== */
         .static-noise {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 0; pointer-events: none;
+            z-index: 1; pointer-events: none;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.5' numOctaves='10' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
             opacity: 0.45; animation: staticFlicker 0.06s infinite; mix-blend-mode: overlay;
         }
@@ -49,201 +87,108 @@
             background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.4) 100%);
             pointer-events: none; z-index: 3;
         }
+
+        /* ====== CONTENEDOR ====== */
         .container {
             z-index: 10; text-align: center; padding: 20px;
-            max-width: 500px; width: 100%; position: relative;
-        }
-        .logo-wrapper { margin-bottom: 0; position: relative; display: flex; flex-direction: column; align-items: center; }
-        .logo-text {
-            font-family: 'Permanent Marker', cursive; font-size: 2.5rem; color: #eee;
-            text-shadow: 0 0 20px rgba(255,255,255,0.15), 0 5px 15px rgba(0,0,0,0.5);
-            letter-spacing: 3px; margin-bottom: 5px;
-        }
-        .logo-sub {
-            font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem; color: #888;
-            letter-spacing: 8px; text-transform: uppercase; margin-bottom: 10px;
-        }
-        .logo-connector {
-            width: 1px; height: 20px;
-            background: linear-gradient(to bottom, rgba(255,255,255,0.25), rgba(255,255,255,0.08));
-            margin: 2px auto 0 auto; position: relative;
-        }
-        .logo-connector::after {
-            content: ''; position: absolute; bottom: -3px; left: 50%; transform: translateX(-50%);
-            width: 5px; height: 5px; background: rgba(255,255,255,0.15); border-radius: 50%;
+            max-width: 600px; width: 100%; position: relative;
         }
         .section { display: none; }
         .section.active { display: block; animation: fadeIn 0.5s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .registro-card {
-            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.12);
-            border-top: 1px solid rgba(255,255,255,0.06);
-            padding: 28px 25px 32px; margin: 4px 0 0 0; position: relative; overflow: hidden;
-        }
-        .registro-card::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            border: 1px solid rgba(255,255,255,0.03); transform: translate(2px, 2px); pointer-events: none;
-        }
+
+        /* ====== ESTILOS DE REGISTRO ====== */
+        .logo-text { font-family: 'Permanent Marker', cursive; font-size: 2.5rem; color: #eee; letter-spacing: 3px; margin-bottom: 5px; }
+        .logo-sub { font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem; color: #888; letter-spacing: 8px; text-transform: uppercase; margin-bottom: 25px; }
+        .registro-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.12); padding: 28px 25px 32px; position: relative; overflow: hidden; }
         .registro-title { font-size: 1.3rem; color: #ccc; letter-spacing: 5px; margin-bottom: 22px; text-transform: uppercase; }
         .form-group { margin-bottom: 16px; text-align: left; }
-        .form-label { display: block; font-size: 0.7rem; color: #666; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 5px; }
-        .form-input {
-            width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15);
-            padding: 11px 14px; color: #ddd; font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.1rem; letter-spacing: 2px; outline: none; transition: all 0.3s ease;
-        }
-        .form-input:focus { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.08); box-shadow: 0 0 15px rgba(255,255,255,0.05); }
-        .form-input::placeholder { color: #444; letter-spacing: 2px; }
-        .form-error { color: #a44; font-size: 0.7rem; letter-spacing: 2px; margin-top: 3px; display: none; }
+        .form-label { display: block; font-size: 0.7rem; color: #666; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 5px; font-family: 'Inter', sans-serif; }
+        .form-input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); padding: 11px 14px; color: #ddd; font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 2px; outline: none; transition: all 0.3s ease; }
+        .form-input:focus { border-color: rgba(200,150,50,0.5); box-shadow: 0 0 15px rgba(200,150,50,0.1); }
+        .form-error { color: #c44; font-size: 0.7rem; letter-spacing: 2px; margin-top: 3px; display: none; font-family: 'Inter', sans-serif; }
         .form-error.show { display: block; }
-        .btn-registro {
-            background: transparent; color: #ddd; border: 2px solid #ddd;
-            padding: 14px 40px; font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem;
-            letter-spacing: 5px; cursor: pointer; margin-top: 8px; transition: all 0.3s ease;
-            position: relative; overflow: hidden; text-transform: uppercase; width: 100%;
-            box-shadow: 0 0 15px rgba(255,255,255,0.06);
-        }
-        .btn-registro::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: rgba(255,255,255,0.08); transition: left 0.4s ease;
-        }
-        .btn-registro:hover::before { left: 100%; }
-        .btn-registro:hover { transform: scale(1.02); border-color: rgba(255,255,255,0.8); box-shadow: 0 0 25px rgba(255,255,255,0.12); }
-        .btn-registro:active { transform: scale(0.98); }
-        .btn-registro:disabled { opacity: 0.4; cursor: not-allowed; transform: none; border-color: #444; color: #666; }
-        .player-info {
-            margin: 4px 0 10px 0; padding: 10px 20px; position: relative;
-            border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02);
-            display: inline-block;
-        }
-        .player-info::before { content: ''; position: absolute; top: 0; left: 20%; width: 60%; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent); }
-        .player-info::after { content: ''; position: absolute; bottom: -1px; left: 30%; width: 40%; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent); }
-        .player-label { font-size: 0.7rem; color: #666; letter-spacing: 4px; text-transform: uppercase; }
-        .player-aka { font-family: 'Permanent Marker', cursive; font-size: 1.5rem; color: #ccc; margin-top: 2px; text-shadow: 0 0 10px rgba(255,255,255,0.1); }
-        .player-instagram { font-size: 0.75rem; color: #555; letter-spacing: 2px; margin-top: 2px; }
-        .barrio-info {
-            margin: 8px 0 12px 0; padding: 8px 20px; position: relative;
-            border: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.015);
-            animation: barrioBreathe 5s ease-in-out infinite; display: inline-block;
-        }
-        @keyframes barrioBreathe { 0%, 100% { border-color: rgba(255,255,255,0.05); } 50% { border-color: rgba(255,255,255,0.12); } }
-        .barrio-title { font-size: 0.7rem; color: #555; letter-spacing: 4px; text-transform: uppercase; }
-        .barrio-name { font-family: 'Permanent Marker', cursive; font-size: 1.4rem; color: #aaa; margin-top: 2px; }
-        .card {
-            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.12);
-            border-top: 1px solid rgba(255,255,255,0.06); padding: 35px 25px 40px;
-            margin: 0; position: relative; overflow: hidden; transition: border-color 0.3s ease;
-        }
-        .card:hover { border-color: rgba(255,255,255,0.2); }
-        .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; border: 1px solid rgba(255,255,255,0.03); transform: translate(2px, 2px); pointer-events: none; }
-        .card::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent); transition: left 0.6s; }
-        .card:hover::after { left: 100%; }
-        .card-corner { position: absolute; width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.18); transition: all 0.3s ease; }
-        .card:hover .card-corner { border-color: rgba(255,255,255,0.35); width: 22px; height: 22px; }
-        .card-corner.tl { top: -1px; left: -1px; border-right: none; border-bottom: none; }
-        .card-corner.tr { top: -1px; right: -1px; border-left: none; border-bottom: none; }
-        .card-corner.bl { bottom: -1px; left: -1px; border-right: none; border-top: none; }
-        .card-corner.br { bottom: -1px; right: -1px; border-left: none; border-top: none; }
-        .card-label { font-size: 0.8rem; color: #666; letter-spacing: 5px; margin-bottom: 18px; text-transform: uppercase; animation: labelPulse 4s ease-in-out infinite; }
-        @keyframes labelPulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
-        .number-display {
-            font-size: 8.5rem; color: #eee; line-height: 1; margin: 12px 0;
-            font-family: 'Bebas Neue', sans-serif;
-            text-shadow: 0 0 25px rgba(255,255,255,0.15), 0 0 50px rgba(255,255,255,0.08);
-            transition: all 0.3s ease; min-height: 130px;
-            display: flex; align-items: center; justify-content: center; position: relative;
-        }
-        .number-display::before {
-            content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 180px; height: 180px; background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
-            border-radius: 50%; pointer-events: none; animation: numGlow 2s ease-in-out infinite;
-        }
-        @keyframes numGlow { 0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; } 50% { transform: translate(-50%, -50%) scale(1.15); opacity: 0.8; } }
-        .number-display.rolling { animation: roll 0.08s infinite; color: #333; text-shadow: none; }
-        @keyframes roll {
-            0% { transform: translateY(-3px) scale(0.97) rotate(-1deg); opacity: 0.5; }
-            25% { transform: translateY(2px) scale(1.01) rotate(1deg); opacity: 0.8; }
-            50% { transform: translateY(-2px) scale(0.99) rotate(-0.5deg); opacity: 0.6; }
-            75% { transform: translateY(3px) scale(1.02) rotate(0.5deg); opacity: 0.9; }
-            100% { transform: translateY(-3px) scale(0.97) rotate(-1deg); opacity: 0.5; }
-        }
-        .number-display.impact { animation: impact 0.6s ease-out; }
-        @keyframes impact { 0% { transform: scale(1.5); filter: blur(10px); opacity: 0; } 50% { transform: scale(0.95); filter: blur(0); opacity: 1; } 70% { transform: scale(1.05); } 100% { transform: scale(1); } }
-        .esquina-name {
-            font-family: 'Permanent Marker', cursive; font-size: 1.6rem; color: #ccc; margin-top: 15px;
-            opacity: 0; transform: translateY(12px) scale(0.95);
-            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-            text-shadow: 0 0 15px rgba(255,255,255,0.1);
-        }
-        .esquina-name.show { opacity: 1; transform: translateY(0) scale(1); animation: esquinaGlow 2s ease-in-out infinite; }
-        @keyframes esquinaGlow { 0%, 100% { text-shadow: 0 0 15px rgba(255,255,255,0.08); } 50% { text-shadow: 0 0 25px rgba(255,255,255,0.2); } }
-        .esquina-label { font-size: 0.7rem; color: #555; letter-spacing: 4px; margin-top: 6px; opacity: 0; transition: opacity 0.5s ease 0.4s; text-transform: uppercase; }
-        .esquina-label.show { opacity: 1; }
-        .btn-generar {
-            background: transparent; color: #ddd; border: 2px solid #ddd;
-            padding: 16px 50px; font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem;
-            letter-spacing: 6px; cursor: pointer; margin-top: 20px; transition: all 0.3s ease;
-            position: relative; overflow: hidden; text-transform: uppercase;
-            box-shadow: 0 0 15px rgba(255,255,255,0.08), inset 0 0 15px rgba(255,255,255,0.04);
-            animation: btnIdle 3s ease-in-out infinite;
-        }
-        @keyframes btnIdle { 0%, 100% { box-shadow: 0 0 15px rgba(255,255,255,0.08), inset 0 0 15px rgba(255,255,255,0.04); } 50% { box-shadow: 0 0 25px rgba(255,255,255,0.15), inset 0 0 20px rgba(255,255,255,0.08); } }
-        .btn-generar::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: rgba(255,255,255,0.08); transition: left 0.4s ease; }
-        .btn-generar:hover::before { left: 100%; }
-        .btn-generar:hover { transform: scale(1.05); box-shadow: 0 0 35px rgba(255,255,255,0.2), inset 0 0 20px rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.8); animation: none; }
-        .btn-generar:active { transform: scale(0.97); }
-        .btn-generar:disabled { opacity: 0.4; cursor: not-allowed; transform: none; border-color: #444; color: #666; animation: none; box-shadow: none; }
-        .share-hint { margin-top: 20px; font-size: 0.75rem; color: #555; letter-spacing: 3px; opacity: 0; transition: opacity 0.5s ease 0.6s; text-transform: uppercase; }
-        .share-hint.show { opacity: 1; animation: hintPulse 2s ease-in-out infinite; }
-        @keyframes hintPulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
-        .share-hint .ig-tag { color: #888; }
-        .footer { margin-top: 30px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 0.65rem; color: #333; letter-spacing: 3px; text-transform: uppercase; animation: footerFade 4s ease-in-out infinite; }
-        @keyframes footerFade { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.8; } }
-        .status-msg { font-size: 0.8rem; letter-spacing: 2px; margin-top: 10px; padding: 8px; border-radius: 4px; display: none; }
+        .btn-registro { background: transparent; color: #ddd; border: 2px solid #ddd; padding: 14px 40px; font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 5px; cursor: pointer; margin-top: 8px; transition: all 0.3s ease; width: 100%; text-transform: uppercase; }
+        .btn-registro:hover { border-color: #c89632; color: #c89632; box-shadow: 0 0 15px rgba(200,150,50,0.2); }
+        .status-msg { font-size: 0.8rem; letter-spacing: 2px; margin-top: 10px; padding: 8px; display: none; font-family: 'Inter', sans-serif; }
         .status-msg.show { display: block; }
-        .status-msg.error { color: #c44; background: rgba(200,50,50,0.1); border: 1px solid rgba(200,50,50,0.3); }
-        .status-msg.success { color: #4c4; background: rgba(50,200,50,0.1); border: 1px solid rgba(50,200,50,0.3); }
-        .status-msg.info { color: #88c; background: rgba(100,100,200,0.1); border: 1px solid rgba(100,100,200,0.3); }
-        .already-rolled {
-            background: rgba(255,200,50,0.05); border: 1px solid rgba(255,200,50,0.2);
-            padding: 20px; margin-top: 15px; display: none;
-        }
-        .already-rolled.show { display: block; animation: fadeIn 0.5s ease-out; }
-        .already-rolled .roll-date { color: #888; font-size: 0.7rem; letter-spacing: 2px; margin-top: 5px; }
-        .admin-link {
-            position: fixed; bottom: 10px; right: 10px;
-            font-size: 0.6rem; color: #333; text-decoration: none;
-            letter-spacing: 1px; z-index: 100; opacity: 0.3; transition: opacity 0.3s;
-        }
-        .admin-link:hover { opacity: 1; color: #666; }
+        .status-msg.info { color: #88c; }
+
+        /* ====== HEADER HOMENAJE ====== */
+        .tribute-header { margin-bottom: 30px; opacity: 0; animation: fadeInDown 1s ease-out 0.3s forwards; }
+        .tribute-label { font-size: 0.7rem; color: #666; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 8px; font-family: 'Inter', sans-serif; }
+        .tribute-name { font-family: 'Permanent Marker', cursive; font-size: 2.2rem; color: #eee; text-shadow: 0 0 20px rgba(255,255,255,0.1); letter-spacing: 3px; }
+        .tribute-sub { font-size: 0.8rem; color: #555; letter-spacing: 4px; margin-top: 5px; font-family: 'Inter', sans-serif; }
+
+        /* ====== ACERTIJO ====== */
+        .acertijo-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-left: 3px solid rgba(200,150,50,0.4); padding: 22px 28px; margin: 0 0 30px 0; text-align: left; opacity: 0; animation: fadeIn 1s ease-out 0.6s forwards; position: relative; }
+        .acertijo-label { font-size: 0.65rem; color: #c89632; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 12px; font-family: 'Inter', sans-serif; }
+        .acertijo-text { font-family: 'Inter', sans-serif; font-size: 0.9rem; color: #aaa; line-height: 1.8; font-style: italic; }
+        .acertijo-text strong { color: #ddd; font-weight: 600; }
+
+        /* ====== LETRAS ====== */
+        .letters-label { font-size: 0.65rem; color: #666; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 12px; opacity: 0; animation: fadeIn 1s ease-out 0.8s forwards; font-family: 'Inter', sans-serif;}
+        .letters-container { display: flex; justify-content: center; gap: 10px; margin: 15px 0 25px; flex-wrap: wrap; opacity: 0; animation: fadeInUp 1s ease-out 0.9s forwards; }
+        .letter-box { width: 58px; height: 70px; background: rgba(255,255,255,0.04); border: 2px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 2.2rem; color: #ddd; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative; }
+        .letter-box.hint { border-color: rgba(200,150,50,0.5); background: rgba(200,150,50,0.08); color: #c89632; box-shadow: 0 0 15px rgba(200,150,50,0.1); }
+        .letter-box.correct { border-color: rgba(100,200,100,0.5); background: rgba(100,200,100,0.08); color: #6c6; box-shadow: 0 0 15px rgba(100,200,100,0.1); animation: letterCorrect 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .letter-box.wrong { border-color: rgba(200,80,80,0.4); animation: shake 0.4s ease; }
+        @keyframes letterCorrect { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+        .letter-hint-label { position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); font-size: 0.5rem; color: #666; letter-spacing: 1px; text-transform: uppercase; white-space: nowrap; font-family: 'Inter', sans-serif;}
+
+        /* ====== INPUT Y BOTÓN ====== */
+        .input-area { margin: 20px 0; opacity: 0; animation: fadeInUp 1s ease-out 1.1s forwards; }
+        .word-input { width: 100%; max-width: 380px; background: rgba(255,255,255,0.05); border: 2px solid rgba(255,255,255,0.15); padding: 14px 20px; color: #ddd; font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 10px; text-align: center; text-transform: uppercase; outline: none; transition: all 0.3s ease; }
+        .word-input:focus { border-color: rgba(200,150,50,0.5); background: rgba(200,150,50,0.05); box-shadow: 0 0 20px rgba(200,150,50,0.1); }
+        .word-input.success { border-color: rgba(100,200,100,0.5); background: rgba(100,200,100,0.05); color: #6c6; }
+        .btn-check { background: transparent; color: #ddd; border: 2px solid #ddd; padding: 14px 50px; font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 5px; cursor: pointer; margin-top: 15px; transition: all 0.3s ease; text-transform: uppercase; opacity: 0; animation: fadeInUp 1s ease-out 1.3s forwards; }
+        .btn-check:hover { transform: scale(1.03); border-color: rgba(200,150,50,0.8); color: #c89632; box-shadow: 0 0 25px rgba(200,150,50,0.15); }
+        .btn-check:disabled { opacity: 0.3; cursor: not-allowed; border-color: #444; color: #666; }
+
+        /* ====== RESULTADO - BARRAKA ====== */
+        .result-barraka { display: none; margin-top: 40px; opacity: 0; padding-bottom: 20px; }
+        .result-barraka.show { display: block; animation: fadeInUp 1.5s ease-out forwards; }
+        .result-divider { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, rgba(200,150,50,0.5), transparent); margin: 0 auto 20px; }
+        .result-label { font-size: 0.7rem; color: #666; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 10px; font-family: 'Inter', sans-serif;}
+        .result-name { font-family: 'Permanent Marker', cursive; font-size: 3.5rem; color: #c89632; text-shadow: 0 0 30px rgba(200,150,50,0.3); animation: barrakaGlow 2s ease-in-out infinite; letter-spacing: 4px; }
+        @keyframes barrakaGlow { 0%, 100% { text-shadow: 0 0 20px rgba(200,150,50,0.2); } 50% { text-shadow: 0 0 40px rgba(200,150,50,0.4), 0 0 60px rgba(200,150,50,0.1); } }
+        
+        /* ====== NÚMERO DE SORTEO (NUEVO) ====== */
+        .numero-sorteo { font-size: 5rem; color: #eee; margin: 15px 0; text-shadow: 0 0 20px rgba(255,255,255,0.2); line-height: 1; }
+        .numero-label { font-size: 0.8rem; color: #888; letter-spacing: 5px; text-transform: uppercase; margin-top: 5px; font-family: 'Inter', sans-serif;}
+        .numero-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 8px; margin: 20px auto; max-width: 250px; }
+
+        .result-message { font-family: 'Inter', sans-serif; font-size: 0.9rem; color: #888; margin-top: 30px; line-height: 1.8; max-width: 420px; margin-left: auto; margin-right: auto; }
+        .result-message em { color: #c89632; font-style: normal; }
+        .result-footer { font-size: 0.7rem; color: #555; letter-spacing: 3px; text-transform: uppercase; margin-top: 25px; font-family: 'Inter', sans-serif;}
+        .error-msg { color: #c44; font-size: 0.8rem; letter-spacing: 2px; margin-top: 12px; opacity: 0; transition: opacity 0.3s; min-height: 20px; font-family: 'Inter', sans-serif;}
+        .error-msg.show { opacity: 1; }
+        .footer { margin-top: 40px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 0.65rem; color: #333; letter-spacing: 3px; text-transform: uppercase; font-family: 'Inter', sans-serif;}
+
         @media (max-width: 480px) {
-            .logo-text { font-size: 1.8rem; }
-            .number-display { font-size: 6.5rem; min-height: 100px; }
-            .number-display::before { width: 140px; height: 140px; }
-            .btn-generar { padding: 14px 35px; font-size: 1.2rem; letter-spacing: 4px; }
-            .card { padding: 25px 15px 30px; }
-            .esquina-name { font-size: 1.3rem; }
-            .player-aka { font-size: 1.3rem; }
-            .barrio-name { font-size: 1.2rem; }
-            .registro-card { padding: 22px 18px 26px; }
-            .registro-title { font-size: 1.1rem; letter-spacing: 4px; }
+            .letter-box { width: 45px; height: 56px; font-size: 1.7rem; }
+            .result-name { font-size: 2.5rem; }
+            .tribute-name { font-size: 1.7rem; }
+            .word-input { font-size: 1.3rem; letter-spacing: 6px; }
+            .numero-sorteo { font-size: 4rem; }
         }
     </style>
 </head>
 <body>
+    <div class="barraka-bg" id="barrakaBg"></div>
     <div class="static-noise"></div>
     <div class="bg-animated"></div>
     <div class="scanlines"></div>
     <div class="vignette"></div>
 
     <div class="container">
-        <div class="logo-wrapper">
+        
+        <!-- ========================================== -->
+        <!-- SECCIÓN 1: REGISTRO -->
+        <!-- ========================================== -->
+        <div id="seccionRegistro" class="section active">
             <div class="logo-text">EN MI BARRIO</div>
             <div class="logo-sub">Sorteo Documental</div>
-            <div class="logo-connector"></div>
-        </div>
-
-        <div id="seccionRegistro" class="section active">
             <div class="registro-card">
                 <div class="registro-title">Ingresa tus datos</div>
                 <form id="formRegistro" onsubmit="return registrarUsuario(event)">
@@ -260,101 +205,101 @@
                     <div class="form-group">
                         <label class="form-label">Celular</label>
                         <input type="tel" class="form-input" id="inputCelular" placeholder="9xx xxx xxx" maxlength="9" required>
-                        <div class="form-error" id="errorCelular">Número inválido (9 dígitos, empieza con 9)</div>
+                        <div class="form-error" id="errorCelular">Número inválido (Empieza con 9)</div>
                     </div>
-                    <button type="submit" class="btn-registro" id="btnRegistro">IR AL SORTEO</button>
+                    <button type="submit" class="btn-registro" id="btnRegistro">ENTRAR AL CYPHER</button>
                     <div class="status-msg info" id="statusRegistro">Conectando...</div>
                 </form>
             </div>
         </div>
 
-        <div id="seccionSorteo" class="section">
-            <div class="player-info">
-                <div class="player-label">Jugador</div>
-                <div class="player-aka" id="displayAka"></div>
-                <div class="player-instagram" id="displayInstagram"></div>
+        <!-- ========================================== -->
+        <!-- SECCIÓN 2: HOMENAJE Y ACERTIJO -->
+        <!-- ========================================== -->
+        <div id="seccionHomenaje" class="section">
+            <div class="tribute-header">
+                <div class="tribute-label">En memoria de</div>
+                <div class="tribute-name">WAGNER</div>
+                <div class="tribute-sub">Eterno Barraka</div>
             </div>
-            <div class="barrio-info">
-                <div class="barrio-title">Primer Episodio</div>
-                <div class="barrio-name">VENTANILLA</div>
+
+            <div class="acertijo-box" id="cajaAcertijo">
+                <div class="acertijo-label">📝 Demuestra que eres del barrio</div>
+                <div class="acertijo-text">
+                    <strong>"Soy el que partió rimas desde el barrio,</strong><br>
+                    <strong>mi nombre es de un maestro de la ópera,</strong><br>
+                    <strong>pero en las calles me gritaban distinto.</strong><br>
+                    <strong>Como el arma que nunca falla,</strong><br>
+                    <strong>así era mi flow cuando subía al escenario.</strong><br>
+                    <strong>6 letras tengo, la primera es W,</strong><br>
+                    <strong>y mi apodo suena a guerra en el asfalto."</strong>
+                </div>
             </div>
-            <div class="card">
-                <div class="card-corner tl"></div>
-                <div class="card-corner tr"></div>
-                <div class="card-corner bl"></div>
-                <div class="card-corner br"></div>
-                <div class="card-label">Tu Número de Barrio</div>
-                <div class="number-display" id="numero">--</div>
-                <div class="esquina-name" id="esquina"></div>
-                <div class="esquina-label" id="esquinaLabel"></div>
+
+            <div id="zonaInteraccion">
+                <div class="letters-label">Adivina la palabra</div>
+                <div class="letters-container">
+                    <div class="letter-box hint" id="box-0">W<span class="letter-hint-label">Pista</span></div>
+                    <div class="letter-box" id="box-1">_</div>
+                    <div class="letter-box" id="box-2">_</div>
+                    <div class="letter-box" id="box-3">_</div>
+                    <div class="letter-box" id="box-4">_</div>
+                    <div class="letter-box" id="box-5">_</div>
+                </div>
+
+                <div class="input-area">
+                    <input type="text" class="word-input" id="wordInput" placeholder="ESCRIBE AQUÍ" maxlength="6" oninput="validarInput(this)" onkeypress="if(event.key==='Enter')verificar()">
+                </div>
+
+                <button class="btn-check" id="btnCheck" onclick="verificar()">VERIFICAR</button>
+                <div class="error-msg" id="errorMsg"></div>
             </div>
-            <button class="btn-generar" id="btnGenerar" onclick="generarNumero()">GENERAR</button>
-            <div class="already-rolled" id="alreadyRolled">
-                <div class="player-label">Ya participaste</div>
-                <div class="player-aka" id="alreadyNumber"></div>
-                <div class="esquina-name" id="alreadyEsquina"></div>
-                <div class="roll-date" id="alreadyDate"></div>
+
+            <!-- RESULTADO Y NÚMERO GENERADO -->
+            <div class="result-barraka" id="resultBarraka">
+                <div class="result-divider"></div>
+                <div class="result-label">Su nombre en el barrio era</div>
+                <div class="result-name">BARRAKA</div>
+                
+                <div class="numero-box">
+                    <div class="numero-label">Tu Número de Sorteo</div>
+                    <div class="numero-sorteo" id="numeroGenerado">--</div>
+                </div>
+
+                <div class="result-message">
+                    <em>"El que nunca bajó la guardia,</em><br>
+                    <em>el que dejó su marca en cada esquina,</em><br>
+                    <em>el que sigue vivo en cada rima."</em><br><br>
+                    Descansa en paz, hermano.<br>
+                    Tu barrio no te olvida.
+                </div>
+                <div class="result-footer">🕊️</div>
             </div>
-            <div class="share-hint" id="shareHint">Screenshot & tag <span class="ig-tag">@EN_MIBARRIOO</span></div>
         </div>
 
-        <div class="footer">Proyecto Documental Freestyle Perú</div>
+        <div class="footer">Proyecto Documental Freestyle Perú · En Mi Barrio</div>
     </div>
 
-    <a href="admin.html" class="admin-link">⚙</a>
-
     <script>
-        // ============================================
-        // CONFIGURACIÓN GOOGLE SHEETS
-        // ============================================
+        // === CONFIGURACIÓN ===
         const API_URL = "https://script.google.com/macros/s/AKfycbwAaxdVpFW_M5atX1BqAQJKwttKUFQkXoXZki626bJ3n45pxMtxze7BITXLu6Ro1vcbkQ/exec";
-
-        const esquinas = [
-            "La 14 de Ventanilla", "Esquina del Chino", "Bajada de Pachacútec",
-            "La Curva del Diablo", "Cruce de la Fábrica", "La Esquina del Gallo",
-            "Bajada del Puente", "La 4 de la Tarde", "Canto del Grillo",
-            "La Esquina Fria", "Bajada del Mercado", "La Curva del Tren",
-            "Esquina del Parque", "La 7 de la Noche", "Cruce de la Loma",
-            "La Esquina del Perro", "Bajada de la Iglesia", "La Curva del Rayo",
-            "Esquina del Cable", "La 11 del Barrio", "La Esquina del Tío",
-            "Bajada de la Cantera", "La Curva del Pescador", "Esquina del Coliseo",
-            "La 3 de la Mañana"
-        ];
-
-        let isRolling = false;
+        const PALABRA_SECRETA = "WAGNER";
         let usuarioActual = null;
-        let conectado = false;
+        let acertado = false;
 
-        // ====== ONLOAD ======
+        // === AUTO-LOGIN ===
         window.onload = function() {
             const guardado = localStorage.getItem('emb_usuario');
             if (guardado) {
                 usuarioActual = JSON.parse(guardado);
-                // Verificar en Sheets si ya tiene número
-                verificarEnSheets(usuarioActual.celular).then(data => {
-                    if (data && data.existe && data.data.numero) {
-                        usuarioActual = { ...usuarioActual, ...data.data };
-                        localStorage.setItem('emb_usuario', JSON.stringify(usuarioActual));
-                    }
-                    mostrarSorteo();
-                }).catch(() => mostrarSorteo());
-            } else {
-                document.getElementById('statusRegistro').classList.remove('show');
+                mostrarHomenaje();
             }
         };
 
-        // ====== VERIFICAR EN SHEETS ======
-        async function verificarEnSheets(celular) {
-            const resp = await fetch(API_URL + "?celular=" + encodeURIComponent(celular), {
-                method: "GET", mode: "cors"
-            });
-            return await resp.json();
-        }
-
-        // ====== REGISTRO ======
+        // === 1. REGISTRO ===
         async function registrarUsuario(event) {
             event.preventDefault();
-            ocultarErrores();
+            document.querySelectorAll('.form-error').forEach(e => e.classList.remove('show'));
 
             const aka = document.getElementById('inputAka').value.trim();
             const instagram = document.getElementById('inputInstagram').value.trim();
@@ -366,156 +311,121 @@
             if (!/^9\d{8}$/.test(celular)) { document.getElementById('errorCelular').classList.add('show'); valido = false; }
             if (!valido) return false;
 
-            mostrarStatus('Verificando registro...', 'info');
-            document.getElementById('btnRegistro').disabled = true;
+            const btn = document.getElementById('btnRegistro');
+            const status = document.getElementById('statusRegistro');
+            btn.disabled = true;
+            status.textContent = 'Verificando...'; status.className = 'status-msg info show';
 
             try {
                 const resp = await fetch(API_URL, {
                     method: "POST",
-                    mode: "cors",
                     headers: { "Content-Type": "text/plain" },
                     body: JSON.stringify({ aka, instagram, celular, numero: null, esquina: null, fechaSorteo: null })
                 });
                 const data = await resp.json();
 
-                if (data.existe) {
-                    usuarioActual = {
-                        aka: data.data.aka, instagram: data.data.instagram, celular: celular,
-                        numero: data.data.numero || null, esquina: data.data.esquina || null,
-                        fecha: data.data.fecha, fechaSorteo: data.data.fechaSorteo || null
-                    };
-                    mostrarStatus('¡Bienvenido de vuelta!', 'success');
-                } else {
-                    usuarioActual = {
-                        aka, instagram, celular, numero: null, esquina: null,
-                        fecha: new Date().toISOString(), fechaSorteo: null
-                    };
-                    mostrarStatus('¡Registro exitoso!', 'success');
-                }
+                usuarioActual = data.existe ? 
+                    { aka: data.data.aka, instagram: data.data.instagram, celular, numero: data.data.numero || null, fechaSorteo: data.data.fechaSorteo || null } : 
+                    { aka, instagram, celular, numero: null, fechaSorteo: null };
 
                 localStorage.setItem('emb_usuario', JSON.stringify(usuarioActual));
-                conectado = true;
-                setTimeout(() => mostrarSorteo(), 500);
-
+                mostrarHomenaje();
             } catch (e) {
                 console.error(e);
-                usuarioActual = { aka, instagram, celular, numero: null, esquina: null, fecha: new Date().toISOString(), fechaSorteo: null };
+                usuarioActual = { aka, instagram, celular, numero: null, fechaSorteo: null };
                 localStorage.setItem('emb_usuario', JSON.stringify(usuarioActual));
-                mostrarStatus('Registro local (sin conexión)', 'error');
-                setTimeout(() => mostrarSorteo(), 500);
+                mostrarHomenaje();
             }
             return false;
         }
 
-        // ====== MOSTRAR SORTEO ======
-        function mostrarSorteo() {
+        function mostrarHomenaje() {
             document.getElementById('seccionRegistro').classList.remove('active');
-            document.getElementById('seccionSorteo').classList.add('active');
-            document.getElementById('displayAka').textContent = usuarioActual.aka;
-            document.getElementById('displayInstagram').textContent = usuarioActual.instagram;
+            document.getElementById('seccionHomenaje').classList.add('active');
 
-            const btn = document.getElementById('btnGenerar');
-            const alreadyDiv = document.getElementById('alreadyRolled');
+            // Si ya tenía número guardado, mostrar resultado directo
+            if (usuarioActual && usuarioActual.numero) {
+                acertado = true;
+                document.getElementById('cajaAcertijo').style.display = 'none';
+                document.getElementById('zonaInteraccion').style.display = 'none';
+                document.getElementById('numeroGenerado').textContent = usuarioActual.numero;
+                document.getElementById('resultBarraka').classList.add('show');
+                document.getElementById('barrakaBg').classList.add('active');
+            }
+        }
 
-            if (usuarioActual.numero) {
-                btn.style.display = 'none';
-                alreadyDiv.classList.add('show');
-                document.getElementById('alreadyNumber').textContent = 'N° ' + usuarioActual.numero;
-                document.getElementById('alreadyEsquina').textContent = usuarioActual.esquina;
-                document.getElementById('alreadyDate').textContent = 'Sorteado el ' + formatearFecha(usuarioActual.fechaSorteo);
-                document.getElementById('numero').textContent = usuarioActual.numero;
-                document.getElementById('esquina').textContent = usuarioActual.esquina;
-                document.getElementById('esquina').classList.add('show');
-                document.getElementById('esquinaLabel').textContent = "Tu Esquina";
-                document.getElementById('esquinaLabel').classList.add('show');
-                document.getElementById('shareHint').classList.add('show');
+        // === 2. LÓGICA DEL ACERTIJO ===
+        function validarInput(input) {
+            input.value = input.value.toUpperCase().replace(/[^A-Z]/g, '');
+            document.getElementById('errorMsg').classList.remove('show');
+        }
+
+        async function verificar() {
+            if (acertado) return;
+            const input = document.getElementById('wordInput');
+            const palabra = input.value.toUpperCase().trim();
+
+            if (palabra.length !== 6) {
+                mostrarError("Debes escribir 6 letras"); return;
+            }
+
+            for (let i = 0; i < 6; i++) {
+                const box = document.getElementById(`box-${i}`);
+                const letra = palabra[i] || '_';
+                box.textContent = letra;
+                box.classList.remove('correct', 'wrong');
+                if (i === 0) box.classList.add('hint');
+                else if (letra === PALABRA_SECRETA[i]) box.classList.add('correct');
+                else box.classList.add('wrong');
+            }
+
+            if (palabra === PALABRA_SECRETA) {
+                acertado = true;
+                input.classList.add('success'); input.disabled = true;
+                document.getElementById('btnCheck').style.display = 'none';
+                document.getElementById('errorMsg').classList.remove('show');
+                
+                // Generar número del 1 al 20
+                const numAlAzar = Math.floor(Math.random() * 20) + 1;
+                document.getElementById('numeroGenerado').textContent = numAlAzar;
+
+                // Guardar en Google Sheets
+                usuarioActual.numero = numAlAzar;
+                usuarioActual.esquina = "BARRAKA"; // Guardamos Barraka como referencia en el Excel
+                usuarioActual.fechaSorteo = new Date().toISOString();
+                localStorage.setItem('emb_usuario', JSON.stringify(usuarioActual));
+
+                try {
+                    await fetch(API_URL, {
+                        method: "POST",
+                        headers: { "Content-Type": "text/plain" },
+                        body: JSON.stringify(usuarioActual)
+                    });
+                } catch(e) { console.error("Error guardando número:", e); }
+
+                // Mostrar homenaje final
+                setTimeout(() => {
+                    document.getElementById('zonaInteraccion').style.display = 'none';
+                    document.getElementById('cajaAcertijo').style.display = 'none';
+                    document.getElementById('resultBarraka').classList.add('show');
+                    document.getElementById('barrakaBg').classList.add('active');
+                }, 1000);
+
             } else {
-                btn.style.display = 'inline-block';
-                btn.textContent = "GENERAR";
-                alreadyDiv.classList.remove('show');
+                mostrarError("Esa no es la palabra. Lee bien la pista.");
+                setTimeout(() => {
+                    for (let i = 1; i < 6; i++) {
+                        const box = document.getElementById(`box-${i}`);
+                        box.textContent = '_'; box.classList.remove('correct', 'wrong');
+                    }
+                }, 1800);
             }
         }
 
-        // ====== GENERAR NÚMERO (SOLO UNA VEZ) ======
-        async function generarNumero() {
-            if (isRolling) return;
-            if (usuarioActual.numero) { alert('¡Ya participaste! Solo un número por persona.'); return; }
-            isRolling = true;
-
-            const btn = document.getElementById('btnGenerar');
-            const display = document.getElementById('numero');
-            const esquina = document.getElementById('esquina');
-            const esquinaLabel = document.getElementById('esquinaLabel');
-            const shareHint = document.getElementById('shareHint');
-            const card = document.querySelector('.card');
-
-            btn.disabled = true; btn.textContent = "TIRANDO...";
-            esquina.classList.remove('show'); esquinaLabel.classList.remove('show');
-            shareHint.classList.remove('show'); display.classList.remove('impact');
-            display.classList.add('rolling'); display.style.textShadow = "none";
-
-            let count = 0;
-            const interval = setInterval(() => {
-                display.textContent = Math.floor(Math.random() * 99) + 1;
-                count++;
-                if (count >= 25) { clearInterval(interval); finalizarSorteo(); }
-            }, 70);
-
-            async function finalizarSorteo() {
-                const numeroFinal = Math.floor(Math.random() * 99) + 1;
-                const esquinaFinal = esquinas[Math.floor(Math.random() * esquinas.length)];
-
-                display.classList.remove('rolling');
-                display.textContent = numeroFinal;
-                display.classList.add('impact');
-                display.style.textShadow = "0 0 25px rgba(255,255,255,0.3), 0 0 50px rgba(255,255,255,0.15)";
-                card.style.borderColor = 'rgba(255,255,255,0.3)';
-                setTimeout(() => card.style.borderColor = '', 300);
-
-                setTimeout(async () => {
-                    esquina.textContent = esquinaFinal;
-                    esquina.classList.add('show');
-                    esquinaLabel.textContent = "Tu Esquina";
-                    esquinaLabel.classList.add('show');
-                    shareHint.classList.add('show');
-                    display.classList.remove('impact');
-
-                    usuarioActual.numero = numeroFinal;
-                    usuarioActual.esquina = esquinaFinal;
-                    usuarioActual.fechaSorteo = new Date().toISOString();
-                    localStorage.setItem('emb_usuario', JSON.stringify(usuarioActual));
-
-                    // Guardar en Sheets
-                    try {
-                        await fetch(API_URL, {
-                            method: "POST", mode: "cors",
-                            headers: { "Content-Type": "text/plain" },
-                            body: JSON.stringify(usuarioActual)
-                        });
-                    } catch(e) { console.error("Error guardando en Sheets:", e); }
-
-                    btn.style.display = 'none';
-                    document.getElementById('alreadyRolled').classList.add('show');
-                    document.getElementById('alreadyNumber').textContent = 'N° ' + numeroFinal;
-                    document.getElementById('alreadyEsquina').textContent = esquinaFinal;
-                    document.getElementById('alreadyDate').textContent = 'Sorteado el ' + formatearFecha(usuarioActual.fechaSorteo);
-                    isRolling = false;
-                }, 400);
-            }
-        }
-
-        function ocultarErrores() {
-            document.querySelectorAll('.form-error').forEach(e => e.classList.remove('show'));
-            document.querySelectorAll('.status-msg').forEach(e => e.classList.remove('show'));
-        }
-        function mostrarStatus(msg, tipo) {
-            const el = document.getElementById('statusRegistro');
-            el.textContent = msg; el.className = 'status-msg ' + tipo + ' show';
-        }
-        function formatearFecha(iso) {
-            if (!iso) return '';
-            const d = new Date(iso);
-            return d.toLocaleDateString('es-PE', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+        function mostrarError(msg) {
+            const err = document.getElementById('errorMsg');
+            err.textContent = msg; err.classList.add('show');
+            setTimeout(() => err.classList.remove('show'), 3500);
         }
     </script>
 </body>
