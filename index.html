@@ -229,6 +229,35 @@
             .numero-sorteo { font-size: 4rem; }
         }
 
+        /* ====== AJUSTES PARA PC (pantallas anchas) ====== */
+@media (min-width: 769px) {
+    /* 1. Más espacio antes del resultado */
+    .result-barraka {
+        margin-top: 55vh; /* Usa % de la pantalla, no px fijos */
+    }
+    
+    /* 2. La caja del número ya no necesita empujarse tanto */
+    #cajaNumero {
+        margin: 40px auto 15px !important;
+    }
+    
+    /* 3. El truco del translateY se reduce en PC */
+    .result-barraka > div[style*="translateY"] {
+        transform: translateY(0) !important;
+    }
+    
+    /* 4. La foto de fondo se ajusta mejor */
+    .barraka-bg {
+        background-position: center top;
+        height: 70vh; /* La foto ocupa 70% de la pantalla */
+    }
+    
+    /* 5. El contenedor principal tiene más aire */
+    .container {
+        padding-top: 40px;
+    }
+}
+
        
     </style>
 </head>
@@ -318,7 +347,7 @@
             <div class="result-barraka" id="resultBarraka">
                 
                 <!-- REGRESAMOS EL TRUCO QUE DEJABA EL MÓVIL PERFECTO -->
-                <div style="transform: translateY(90px);">
+               <div class="result-offset">
                     
                     <!-- EL NÚMERO -->
                     <div id="cajaNumero" style="display: none; text-align: center; margin: 300px auto 15px; position: relative; z-index: 5;">
