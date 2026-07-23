@@ -132,7 +132,6 @@
         .letters-label { font-size: 0.65rem; color: #666; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 12px; font-family: 'Inter', sans-serif;}
         .letters-container { display: flex; justify-content: center; gap: 10px; margin: 15px 0 25px; flex-wrap: wrap; }
         
-        /* Ahora las letras son inputs interactivos */
         .letter-box { 
             width: 58px; height: 70px; 
             background: rgba(255,255,255,0.04); 
@@ -145,7 +144,7 @@
             text-transform: uppercase;
             outline: none;
             font-family: 'Bebas Neue', sans-serif;
-            border-radius: 0; /* Por si en móviles se redondea */
+            border-radius: 0; 
             padding: 0;
         }
         .letter-box:focus {
@@ -274,7 +273,8 @@
         <!-- ========================================== -->
         <div id="seccionRegistro" class="section active">
             
-            <div style="text-align: center; margin: 15px auto 10px auto;">
+            <!-- MARGEN INFERIOR NEGATIVO PARA PEGARLO AL TEXTO -->
+            <div style="text-align: center; margin: 0 auto -5px auto;">
                 <img src="LOGO EMB BLANCO.png" alt="Logo En Mi Barrio" style="max-width: 190px; width: 100%; height: auto; display: block; margin: 0 auto;">
             </div>
             
@@ -323,27 +323,29 @@
             <div class="acertijo-box" id="cajaAcertijo">
                 <div class="acertijo-label">📝 Demuestra que eres del barrio</div>
                 
-                <!-- NUEVO ACERTIJO ACTUALIZADO -->
+                <!-- ACERTIJO CON GRAMÁTICA CORREGIDA -->
                 <div class="acertijo-text">
-                    <strong>"Bueno en un 4x4 pero para moverse ..usaba 2x2 mas 1</strong><br>
-                    <strong>De lacio a ondulado, de ondulado a lacio lo viste seguro</strong><br>
+                    <strong>"Bueno en un 4x4, pero para moverse usaba 2x2 más 1.</strong><br>
+                    <strong>De lacio a ondulado, de ondulado a lacio, lo viste seguro.</strong><br>
                     <strong>Brazos con tinta como acabando de pintar un recuerdo,</strong><br>
                     <strong>nunca te negó un abrazo con una sonrisa de por medio.</strong><br>
-                    <strong>Mi nombre 6 días mi segundo nombre una semana</strong><br>
-                    <strong>Si sabes quién soy ya llevas en ti algo de ventana"</strong>
+                    <strong>Mi nombre 6 días, mi segundo nombre una semana.</strong><br>
+                    <strong>Si sabes quién soy, ya llevas en ti algo de ventana."</strong>
                 </div>
             </div>
 
             <div id="zonaInteraccion">
                 <div class="letters-label">Adivina la palabra</div>
                 
-                <!-- CAJAS DE TEXTO INTERACTIVAS DIRECTAS -->
+                <!-- CAJAS DE TEXTO INTERACTIVAS - LA 'W' YA ESTÁ INCLUIDA -->
                 <div class="letters-container">
                     <div style="position: relative;">
-                        <input type="text" class="letter-box hint" id="box-0" maxlength="1" oninput="moverFoco(this, 1)" onkeydown="borrarFoco(event, this, null)">
+                        <!-- Añadido value="W" y readonly para que no se borre la pista -->
+                        <input type="text" class="letter-box hint" id="box-0" value="W" readonly>
                         <span class="letter-hint-label">Pista</span>
                     </div>
-                    <input type="text" class="letter-box" id="box-1" maxlength="1" oninput="moverFoco(this, 2)" onkeydown="borrarFoco(event, this, 0)">
+                    <!-- El anteriorId es null para que al borrar en la caja 1, no salte a la caja W -->
+                    <input type="text" class="letter-box" id="box-1" maxlength="1" oninput="moverFoco(this, 2)" onkeydown="borrarFoco(event, this, null)">
                     <input type="text" class="letter-box" id="box-2" maxlength="1" oninput="moverFoco(this, 3)" onkeydown="borrarFoco(event, this, 1)">
                     <input type="text" class="letter-box" id="box-3" maxlength="1" oninput="moverFoco(this, 4)" onkeydown="borrarFoco(event, this, 2)">
                     <input type="text" class="letter-box" id="box-4" maxlength="1" oninput="moverFoco(this, 5)" onkeydown="borrarFoco(event, this, 3)">
@@ -361,7 +363,6 @@
                 
                <div class="result-offset">
                     
-                    <!-- EL NÚMERO -->
                     <div id="cajaNumero" style="display: none; text-align: center; margin: 300px auto 15px; position: relative; z-index: 5;">
                         <div class="numero-box">
                             <span class="numero-label">Tu número de sorteo es:</span>
@@ -369,7 +370,6 @@
                         </div>
                     </div>
 
-                    <!-- TEXTO Y PALOMA -->
                     <div class="result-inline-container" style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 15px;">
                         <div class="result-message" style="margin-top: 0; display: inline-block;">
                             Descansa en paz, hermano. Tu barrio no te olvida. 🕊️
@@ -384,7 +384,6 @@
             
     </div> <!-- Fin de container -->
 
-    <!-- EL FOOTER -->
     <div class="footer">Proyecto Documental Freestyle Perú · En Mi Barrio</div>
 
     <script>
@@ -447,8 +446,8 @@
             document.getElementById('seccionRegistro').classList.remove('active');
             document.getElementById('seccionHomenaje').classList.add('active');
 
-            // Foco inicial en la primera caja
-            setTimeout(() => { if (!acertado) document.getElementById('box-0').focus(); }, 500);
+            // Foco inicial en la primera caja vacía (box-1)
+            setTimeout(() => { if (!acertado) document.getElementById('box-1').focus(); }, 500);
 
             if (usuarioActual && usuarioActual.numero) {
                 acertado = true;
@@ -466,22 +465,18 @@
 
         /* ====== LOGICA DE LAS CAJAS INTERACTIVAS ====== */
         function moverFoco(elemento, siguienteId) {
-            // Forzar mayúsculas y solo letras
             elemento.value = elemento.value.toUpperCase().replace(/[^A-Z]/g, '');
             document.getElementById('errorMsg').classList.remove('show');
             
-            // Si escribió algo y hay un siguiente cuadro, saltar a él
             if (elemento.value.length === 1 && siguienteId !== null) {
                 document.getElementById('box-' + siguienteId).focus();
             }
         }
 
         function borrarFoco(evento, elemento, anteriorId) {
-            // Si presiona retroceso estando vacío, saltar al cuadro anterior
             if (evento.key === 'Backspace' && elemento.value === '' && anteriorId !== null) {
                 document.getElementById('box-' + anteriorId).focus();
             }
-            // Si presiona enter en cualquier cuadro
             if (evento.key === 'Enter') {
                 verificar();
             }
@@ -490,7 +485,6 @@
         async function verificar() {
             if (acertado) return;
             
-            // Unir lo que el usuario escribió en las 6 cajas
             let palabra = "";
             for(let i = 0; i < 6; i++) {
                 palabra += document.getElementById(`box-${i}`).value.toUpperCase();
@@ -500,7 +494,6 @@
                 mostrarError("Debes llenar las 6 letras"); return;
             }
 
-            // Colorear cada caja según si la letra es correcta o no
             for (let i = 0; i < 6; i++) {
                 const box = document.getElementById(`box-${i}`);
                 const letra = palabra[i];
@@ -516,7 +509,6 @@
             if (palabra === PALABRA_SECRETA) {
                 acertado = true;
                 
-                // Desactivar las cajas para que ya no escriban
                 for(let i = 0; i < 6; i++) {
                     document.getElementById(`box-${i}`).disabled = true;
                 }
@@ -557,14 +549,13 @@
                     for (let i = 0; i < 6; i++) {
                         const box = document.getElementById(`box-${i}`);
                         box.classList.remove('correct', 'wrong');
-                        // Borrar las letras y dejarlo listo para intentar de nuevo
                         if (i === 0) {
                             box.classList.add('hint');
+                            box.value = 'W'; // Mantenemos la W a salvo
                         } else {
                             box.value = '';
                         }
                     }
-                    // Regresar el cursor a la caja 1
                     document.getElementById('box-1').focus();
                 }, 1800);
             }
