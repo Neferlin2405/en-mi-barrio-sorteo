@@ -160,27 +160,32 @@
         .result-name { font-family: 'Permanent Marker', cursive; font-size: 3.5rem; color: #c89632; text-shadow: 0 0 30px rgba(200,150,50,0.3); animation: barrakaGlow 2s ease-in-out infinite; letter-spacing: 4px; }
         @keyframes barrakaGlow { 0%, 100% { text-shadow: 0 0 20px rgba(200,150,50,0.2); } 50% { text-shadow: 0 0 40px rgba(200,150,50,0.4), 0 0 60px rgba(200,150,50,0.1); } }
         
-       /* ====== NÚMERO DE SORTEO (REDISEÑADO) ====== */
+       /* ====== NÚMERO DE SORTEO (REDISEÑADO Y PEQUEÑO) ====== */
         .numero-box { 
             background: rgba(255,255,255,0.03); 
             border: 1px solid rgba(255,255,255,0.15); 
-            padding: 10px 30px; 
-            border-radius: 50px; /* Borde muy redondeado para que sea un rectángulo suave */
-            display: inline-flex; /* Esto pone el texto y el número uno al lado del otro */
+            padding: 8px 18px; /* Relleno más pequeño */
+            border-radius: 40px; 
+            display: inline-flex; 
             align-items: center; 
             justify-content: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
         .numero-label { 
-            font-size: 0.85rem; color: #888; letter-spacing: 3px; 
-            text-transform: uppercase; font-family: 'Inter', sans-serif; 
-            margin-right: 15px; /* Separación entre el texto y el número */
+            font-size: 0.65rem; /* Texto más pequeño */
+            color: #888; 
+            letter-spacing: 2px; 
+            text-transform: uppercase; 
+            font-family: 'Inter', sans-serif; 
+            margin-right: 12px; 
         }
         .numero-sorteo { 
-            font-size: 2.5rem; color: #c89632; 
-            text-shadow: 0 0 15px rgba(200,150,50,0.3); 
+            font-size: 1.6rem; /* Número más pequeño */
+            color: #c89632; 
+            text-shadow: 0 0 10px rgba(200,150,50,0.3); 
             line-height: 1; 
         }
+        
         .result-message { font-family: 'Inter', sans-serif; font-size: 0.9rem; color: #888; margin-top: 30px; line-height: 1.8; max-width: 420px; margin-left: auto; margin-right: auto; }
         .result-message em { color: #c89632; font-style: normal; }
         .result-footer { font-size: 0.7rem; color: #555; letter-spacing: 3px; text-transform: uppercase; margin-top: 25px; font-family: 'Inter', sans-serif;}
@@ -246,14 +251,6 @@
                 <div class="tribute-sub">Eterno Barraka</div>
             </div>
 
-            <!-- AQUÍ ESTÁ EL NÚMERO EN SU NUEVA POSICIÓN Y DISEÑO -->
-            <div id="cajaNumero" style="display: none; text-align: center; margin: 30px auto 20px; position: relative; z-index: 5;">
-                <div class="numero-box">
-                    <span class="numero-label">Tu número de sorteo es:</span>
-                    <span class="numero-sorteo" id="numeroGenerado">--</span>
-                </div>
-            </div>
-
             <div class="acertijo-box" id="cajaAcertijo">
                 <div class="acertijo-label">📝 Demuestra que eres del barrio</div>
                 
@@ -300,12 +297,20 @@
                     Descansa en paz, hermano.<br>
                     Tu barrio no te olvida.
                 </div>
-                <div class="result-footer">🕊️</div>
+                <div class="result-footer" style="margin-bottom: 25px;">🕊️</div>
+
+                <!-- EL NÚMERO AHORA APARECE EN LA BASE -->
+                <div id="cajaNumero" style="display: none; text-align: center; margin: 0 auto 20px; position: relative; z-index: 5;">
+                    <div class="numero-box">
+                        <span class="numero-label">Tu número de sorteo es:</span>
+                        <span class="numero-sorteo" id="numeroGenerado">--</span>
+                    </div>
+                </div>
+
             </div>
         </div>
 
         <div class="footer">Proyecto Documental Freestyle Perú · En Mi Barrio</div>
-    </div>
 
     <script>
         // === CONFIGURACIÓN ===
