@@ -273,7 +273,6 @@
         <!-- ========================================== -->
         <div id="seccionRegistro" class="section active">
             
-            <!-- MARGEN INFERIOR NEGATIVO PARA PEGARLO AL TEXTO -->
             <div style="text-align: center; margin: 0 auto -5px auto;">
                 <img src="LOGO EMB BLANCO.png" alt="Logo En Mi Barrio" style="max-width: 190px; width: 100%; height: auto; display: block; margin: 0 auto;">
             </div>
@@ -323,7 +322,6 @@
             <div class="acertijo-box" id="cajaAcertijo">
                 <div class="acertijo-label">📝 Demuestra que eres del barrio</div>
                 
-                <!-- ACERTIJO CON GRAMÁTICA CORREGIDA -->
                 <div class="acertijo-text">
                     <strong>"Bueno en un 4x4, pero para moverse usaba 2x2 más 1.</strong><br>
                     <strong>De lacio a ondulado, de ondulado a lacio, lo viste seguro.</strong><br>
@@ -337,14 +335,11 @@
             <div id="zonaInteraccion">
                 <div class="letters-label">Adivina la palabra</div>
                 
-                <!-- CAJAS DE TEXTO INTERACTIVAS - LA 'W' YA ESTÁ INCLUIDA -->
                 <div class="letters-container">
                     <div style="position: relative;">
-                        <!-- Añadido value="W" y readonly para que no se borre la pista -->
                         <input type="text" class="letter-box hint" id="box-0" value="W" readonly>
                         <span class="letter-hint-label">Pista</span>
                     </div>
-                    <!-- El anteriorId es null para que al borrar en la caja 1, no salte a la caja W -->
                     <input type="text" class="letter-box" id="box-1" maxlength="1" oninput="moverFoco(this, 2)" onkeydown="borrarFoco(event, this, null)">
                     <input type="text" class="letter-box" id="box-2" maxlength="1" oninput="moverFoco(this, 3)" onkeydown="borrarFoco(event, this, 1)">
                     <input type="text" class="letter-box" id="box-3" maxlength="1" oninput="moverFoco(this, 4)" onkeydown="borrarFoco(event, this, 2)">
@@ -374,6 +369,12 @@
                         <div class="result-message" style="margin-top: 0; display: inline-block;">
                             Descansa en paz, hermano. Tu barrio no te olvida. 🕊️
                         </div>
+                    </div>
+
+                    <!-- NUEVO BRANDING FINAL @EN_MIBARRIOO -->
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 30px;">
+                        <span style="font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; color: #ccc; letter-spacing: 2px; margin-top: 4px;">@EN_MIBARRIOO</span>
+                        <img src="LOGO EMB BLANCO.png" alt="Logo Pequeño" style="width: 30px; height: auto;">
                     </div>
 
                 </div>
@@ -446,7 +447,6 @@
             document.getElementById('seccionRegistro').classList.remove('active');
             document.getElementById('seccionHomenaje').classList.add('active');
 
-            // Foco inicial en la primera caja vacía (box-1)
             setTimeout(() => { if (!acertado) document.getElementById('box-1').focus(); }, 500);
 
             if (usuarioActual && usuarioActual.numero) {
@@ -463,7 +463,6 @@
             }
         }
 
-        /* ====== LOGICA DE LAS CAJAS INTERACTIVAS ====== */
         function moverFoco(elemento, siguienteId) {
             elemento.value = elemento.value.toUpperCase().replace(/[^A-Z]/g, '');
             document.getElementById('errorMsg').classList.remove('show');
@@ -551,7 +550,7 @@
                         box.classList.remove('correct', 'wrong');
                         if (i === 0) {
                             box.classList.add('hint');
-                            box.value = 'W'; // Mantenemos la W a salvo
+                            box.value = 'W'; 
                         } else {
                             box.value = '';
                         }
