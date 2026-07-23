@@ -150,13 +150,17 @@
         .btn-check:disabled { opacity: 0.3; cursor: not-allowed; border-color: #444; color: #666; }
         
        /* ====== RESULTADO - BARRAKA ====== */
-        .result-barraka { 
-            display: none; 
-            margin-top: 200px; /* Aquí le dejamos un espacio inmenso para que pongas lo que quieras */
-            opacity: 0; 
-            padding-bottom: 20px; 
-        }
-        .result-barraka.show { display: block; animation: fadeInUp 1.5s ease-out forwards; }
+.result-barraka {
+    display: none;
+    margin-top: 40px; 
+    opacity: 0;
+    padding-bottom: 20px;
+}
+.result-barraka.show { display: block; animation: fadeInUp 1.5s ease-out forwards; }
+@keyframes fadeInUp { 
+    0% { opacity: 0; transform: translateY(20px); } 
+    100% { opacity: 1; transform: translateY(0); } 
+}
         .result-divider { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, rgba(200,150,50,0.5), transparent); margin: 0 auto 20px; }
         .result-label { font-size: 0.7rem; color: #666; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 10px; font-family: 'Inter', sans-serif;}
         .result-name { font-family: 'Permanent Marker', cursive; font-size: 3.5rem; color: #c89632; text-shadow: 0 0 30px rgba(200,150,50,0.3); animation: barrakaGlow 2s ease-in-out infinite; letter-spacing: 4px; }
