@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,7 +12,7 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
+       body {
             background: #111111;
             min-height: 100vh;
             font-family: 'Bebas Neue', sans-serif;
@@ -21,7 +23,7 @@
 
         /* ====== FONDO CON FOTO DE BARRAKA ====== */
         .barraka-bg {
-            position: absolute;
+            position: absolute; /* Antes decía fixed, absolute hace que baje con el texto */
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: 0;
             opacity: 0;
@@ -30,11 +32,12 @@
             background-size: cover;
             background-position: center 120px;
             background-repeat: no-repeat;
+            /* El filtro cinematográfico */
             filter: grayscale(100%) contrast(120%) brightness(80%);
             mix-blend-mode: luminosity;
         }
         .barraka-bg.active {
-            opacity: 0.8;
+            opacity: 0.8; /* Ajusta la opacidad de la foto aquí */
         }
         .barraka-bg::after {
             content: '';
@@ -85,11 +88,11 @@
             pointer-events: none; z-index: 3;
         }
 
-        /* ====== CONTENEDOR PRINCIPAL CENTRADO ====== */
+      /* ====== CONTENEDOR ====== */
         .container {
             z-index: 10; 
             text-align: center; 
-            padding: 40px 20px 80px; 
+            padding: 60px 20px 80px; /* <--- Lo regresamos a 80px para que el footer no baje más */
             max-width: 600px; 
             width: 100%; 
             position: relative;
@@ -116,17 +119,14 @@
         .status-msg.show { display: block; }
         .status-msg.info { color: #88c; }
 
-        /* ====== ACERTIJO (ASEGURADO AL CENTRO) ====== */
-        .acertijo-box { 
-            background: rgba(255,255,255,0.03); 
-            border: 1px solid rgba(255,255,255,0.1); 
-            border-left: 3px solid rgba(200,150,50,0.4); 
-            padding: 22px 28px; 
-            margin: 0 auto 30px auto; /* Centrado perfecto */
-            text-align: left; 
-            position: relative; 
-            width: 100%;
-        }
+        /* ====== HEADER HOMENAJE ====== */
+        .tribute-header { margin-bottom: 30px; }
+        .tribute-label { font-size: 0.7rem; color: #666; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 8px; font-family: 'Inter', sans-serif; }
+        .tribute-name { font-family: 'Permanent Marker', cursive; font-size: 2.2rem; color: #eee; text-shadow: 0 0 20px rgba(255,255,255,0.1); letter-spacing: 3px; }
+        .tribute-sub { font-size: 0.8rem; color: #555; letter-spacing: 4px; margin-top: 5px; font-family: 'Inter', sans-serif; }
+
+        /* ====== ACERTIJO ====== */
+        .acertijo-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-left: 3px solid rgba(200,150,50,0.4); padding: 22px 28px; margin: 0 0 30px 0; text-align: left; position: relative; }
         .acertijo-label { font-size: 0.65rem; color: #c89632; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 12px; font-family: 'Inter', sans-serif; }
         .acertijo-text { font-family: 'Inter', sans-serif; font-size: 0.9rem; color: #aaa; line-height: 1.8; font-style: italic; }
         .acertijo-text strong { color: #ddd; font-weight: 600; }
@@ -154,7 +154,7 @@
        /* ====== RESULTADO - BARRAKA ====== */
         .result-barraka { 
             display: none; 
-            margin-top: 280px; 
+            margin-top: 280px; /* Esto empuja todo el bloque final hacia abajo de la foto */
             opacity: 0; 
             padding-bottom: 40px; 
         }
@@ -163,12 +163,16 @@
             0% { opacity: 0; transform: translateY(20px); } 
             100% { opacity: 1; transform: translateY(0); } 
         }
+        .result-divider { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, rgba(200,150,50,0.5), transparent); margin: 0 auto 20px; }
+        .result-label { font-size: 0.7rem; color: #666; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 10px; font-family: 'Inter', sans-serif;}
+        .result-name { font-family: 'Permanent Marker', cursive; font-size: 3.5rem; color: #c89632; text-shadow: 0 0 30px rgba(200,150,50,0.3); animation: barrakaGlow 2s ease-in-out infinite; letter-spacing: 4px; }
+        @keyframes barrakaGlow { 0%, 100% { text-shadow: 0 0 20px rgba(200,150,50,0.2); } 50% { text-shadow: 0 0 40px rgba(200,150,50,0.4), 0 0 60px rgba(200,150,50,0.1); } }
         
-       /* ====== NÚMERO DE SORTEO ====== */
+       /* ====== NÚMERO DE SORTEO (REDISEÑADO Y PEQUEÑO) ====== */
         .numero-box { 
             background: rgba(255,255,255,0.03); 
             border: 1px solid rgba(255,255,255,0.15); 
-            padding: 8px 18px; 
+            padding: 8px 18px; /* Relleno más pequeño */
             border-radius: 40px; 
             display: inline-flex; 
             align-items: center; 
@@ -176,7 +180,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
         .numero-label { 
-            font-size: 0.65rem; 
+            font-size: 0.65rem; /* Texto más pequeño */
             color: #888; 
             letter-spacing: 2px; 
             text-transform: uppercase; 
@@ -184,7 +188,7 @@
             margin-right: 12px; 
         }
         .numero-sorteo { 
-            font-size: 1.6rem; 
+            font-size: 1.6rem; /* Número más pequeño */
             color: #c89632; 
             text-shadow: 0 0 10px rgba(200,150,50,0.3); 
             line-height: 1; 
@@ -192,24 +196,25 @@
         
         .result-message { 
             font-family: 'Inter', sans-serif; 
-            font-size: 0.75rem; 
+            font-size: 0.75rem; /* Letra más pequeña */
             color: #888; 
             margin-top: 15px; 
-            line-height: 1.3; 
+            line-height: 1.3; /* Líneas mucho más pegadas */
             max-width: 420px; 
             margin-left: auto; 
             margin-right: auto; 
         }
+        .result-message em { color: #c89632; font-style: normal; }
+        .result-footer { font-size: 0.7rem; color: #555; letter-spacing: 3px; text-transform: uppercase; margin-top: 25px; font-family: 'Inter', sans-serif;}
         .error-msg { color: #c44; font-size: 0.8rem; letter-spacing: 2px; margin-top: 12px; opacity: 0; transition: opacity 0.3s; min-height: 20px; font-family: 'Inter', sans-serif;}
         .error-msg.show { opacity: 1; }
-        
         .footer { 
             margin-top: 40px; 
             margin-bottom: 20px;
             padding-top: 15px; 
             border-top: 1px solid rgba(255,255,255,0.06); 
             font-size: 0.65rem; 
-            color: #555; 
+            color: #555; /* Un poquito más visible para que luzca bien */
             letter-spacing: 3px; 
             text-transform: uppercase; 
             font-family: 'Inter', sans-serif;
@@ -221,9 +226,22 @@
         @media (max-width: 480px) {
             .letter-box { width: 45px; height: 56px; font-size: 1.7rem; }
             .result-name { font-size: 2.5rem; }
+            .tribute-name { font-size: 1.7rem; }
             .word-input { font-size: 1.3rem; letter-spacing: 6px; }
             .numero-sorteo { font-size: 4rem; }
         }
+
+        /* ====== FORZAR CENTRADO TOTAL DEL ACERTIJO ====== */
+        body > div, .container, main {
+            text-align: center;
+        }
+        
+        /* Asegurar que el cuadro del acertijo no se alinee a la izquierda */
+        [class*="box"], [class*="card"], [class*="tribute"] {
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+       
     </style>
 </head>
 <body>
@@ -265,19 +283,17 @@
             </div>
         </div>
 
-        <!-- ========================================== -->
+       <!-- ========================================== -->
         <!-- SECCIÓN 2: HOMENAJE Y ACERTIJO -->
         <!-- ========================================== -->
-        <div id="seccionHomenaje" class="section">
-            
-            <!-- LOGOTIPO EN LA PARTE SUPERIOR -->
-            <div style="text-align: center; margin: 10px auto 25px auto;">
-                <img src="LOGO EMB BLANCO.png" alt="Logo Barraka" style="max-width: 170px; width: 100%; height: auto; display: block; margin: 0 auto;">
-            </div>
+       <!-- LOGOTIPO EN LA PARTE SUPERIOR -->
+    <div style="text-align: center; margin: 20px auto 30px auto;">
+        <img src="LOGO EMB BLANCO.png" alt="Logo Barraka" style="max-width: 180px; width: 100%; height: auto; display: block; margin: 0 auto;">
+    </div>
 
-            <!-- ACERTIJO CENTRADO -->
             <div class="acertijo-box" id="cajaAcertijo">
                 <div class="acertijo-label">📝 Demuestra que eres del barrio</div>
+                
                 <div class="acertijo-text">
                     <strong>"Soy el que partió rimas desde el barrio,</strong><br>
                     <strong>mi nombre es de un maestro de la ópera,</strong><br>
@@ -308,8 +324,10 @@
                 <div class="error-msg" id="errorMsg"></div>
             </div>
 
-            <!-- RESULTADO FINAL -->
+        <!-- RESULTADO FINAL -->
             <div class="result-barraka" id="resultBarraka">
+                
+                <!-- REGRESAMOS EL TRUCO QUE DEJABA EL MÓVIL PERFECTO -->
                 <div style="transform: translateY(90px);">
                     
                     <!-- EL NÚMERO -->
@@ -328,20 +346,25 @@
                     </div>
 
                 </div>
+
             </div>
+            
+            </div> <!-- Fin de result-barraka -->
+            
 
-        </div> <!-- Fin de seccionHomenaje -->
+        </div> <!-- Fin de container -->
 
-    </div> <!-- Fin de container -->
-
+    <!-- EL FOOTER AHORA VA FUERA Y ABAJO DEL TODO -->
     <div class="footer">Proyecto Documental Freestyle Perú · En Mi Barrio</div>
 
     <script>
+        // === CONFIGURACIÓN ===
         const API_URL = "https://script.google.com/macros/s/AKfycbwAaxdVpFW_M5atX1BqAQJKwttKUFQkXoXZki626bJ3n45pxMtxze7BITXLu6Ro1vcbkQ/exec";
         const PALABRA_SECRETA = "WAGNER";
         let usuarioActual = null;
         let acertado = false;
 
+        // === AUTO-LOGIN ===
         window.onload = function() {
             const guardado = localStorage.getItem('emb_usuario');
             if (guardado) {
@@ -350,6 +373,7 @@
             }
         };
 
+        // === 1. REGISTRO ===
         async function registrarUsuario(event) {
             event.preventDefault();
             document.querySelectorAll('.form-error').forEach(e => e.classList.remove('show'));
@@ -396,17 +420,19 @@
             document.getElementById('seccionRegistro').classList.remove('active');
             document.getElementById('seccionHomenaje').classList.add('active');
 
+            // Si ya tenía número guardado, mostrar resultado directo
             if (usuarioActual && usuarioActual.numero) {
                 acertado = true;
                 document.getElementById('cajaAcertijo').style.display = 'none';
                 document.getElementById('zonaInteraccion').style.display = 'none';
                 document.getElementById('numeroGenerado').textContent = usuarioActual.numero;
-                document.getElementById('cajaNumero').style.display = 'block'; 
+                document.getElementById('cajaNumero').style.display = 'block'; // <--- ESTA LÍNEA ES NUEVA
                 document.getElementById('resultBarraka').classList.add('show');
                 document.getElementById('barrakaBg').classList.add('active');
             }
         }
 
+        // === 2. LÓGICA DEL ACERTIJO ===
         function validarInput(input) {
             input.value = input.value.toUpperCase().replace(/[^A-Z]/g, '');
             document.getElementById('errorMsg').classList.remove('show');
@@ -437,14 +463,17 @@
                 document.getElementById('btnCheck').style.display = 'none';
                 document.getElementById('errorMsg').classList.remove('show');
                 
+                // Generar número del 1 al 20
                 const numAlAzar = Math.floor(Math.random() * 20) + 1;
                 document.getElementById('numeroGenerado').textContent = numAlAzar;
 
+               // Guardar localmente
                 usuarioActual.numero = numAlAzar;
-                usuarioActual.esquina = "BARRAKA"; 
+                usuarioActual.esquina = "BARRAKA"; // Guardamos Barraka como referencia
                 usuarioActual.fechaSorteo = new Date().toISOString();
                 localStorage.setItem('emb_usuario', JSON.stringify(usuarioActual));
 
+                // Mostrar homenaje final AL INSTANTE (sin esperar al Excel)
                 setTimeout(() => {
                     document.getElementById('zonaInteraccion').style.display = 'none';
                     document.getElementById('cajaAcertijo').style.display = 'none';
@@ -453,6 +482,7 @@
                     document.getElementById('barrakaBg').classList.add('active');
                 }, 1000);
 
+                // Mandar la info al Excel en segundo plano
                 try {
                     fetch(API_URL, {
                         method: "POST",
