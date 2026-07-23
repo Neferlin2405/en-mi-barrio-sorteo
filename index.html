@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -231,16 +230,33 @@
             .numero-sorteo { font-size: 4rem; }
         }
 
-        /* ====== FORZAR CENTRADO TOTAL DEL ACERTIJO ====== */
-        body > div, .container, main {
-            text-align: center;
+                /* ====== OFFSET PARA MÓVIL (mantiene posición original) ====== */
+        .result-offset { transform: translateY(90px); }
+
+        /* ====== AJUSTES PARA PC (pantallas anchas) ====== */
+        @media (min-width: 769px) {
+            /* En PC: más espacio proporcional, pero no exagerado */
+            .result-barraka {
+                margin-top: 420px;
+            }
+
+            /* En PC: la caja del número sin margen enorme */
+            #cajaNumero {
+                margin: 20px auto 15px !important;
+            }
+
+            /* En PC: anular el translateY del offset */
+            .result-offset {
+                transform: translateY(0) !important;
+            }
+
+            /* En PC: la foto de fondo cubre toda la pantalla como en móvil */
+            .barraka-bg {
+                background-position: center 80px;
+                height: 100%;
+            }
         }
-        
-        /* Asegurar que el cuadro del acertijo no se alinee a la izquierda */
-        [class*="box"], [class*="card"], [class*="tribute"] {
-            margin-left: auto !important;
-            margin-right: auto !important;
-        }
+
        
     </style>
 </head>
@@ -286,10 +302,12 @@
        <!-- ========================================== -->
         <!-- SECCIÓN 2: HOMENAJE Y ACERTIJO -->
         <!-- ========================================== -->
-       <!-- LOGOTIPO EN LA PARTE SUPERIOR -->
-    <div style="text-align: center; margin: 20px auto 30px auto;">
-        <img src="LOGO EMB BLANCO.png" alt="Logo Barraka" style="max-width: 180px; width: 100%; height: auto; display: block; margin: 0 auto;">
-    </div>
+        <div id="seccionHomenaje" class="section">
+            <div class="tribute-header">
+                <div class="tribute-label">En memoria de</div>
+                <div class="tribute-name">WAGNER</div>
+                <div class="tribute-sub">Barraka</div>
+            </div>
 
             <div class="acertijo-box" id="cajaAcertijo">
                 <div class="acertijo-label">📝 Demuestra que eres del barrio</div>
@@ -328,7 +346,7 @@
             <div class="result-barraka" id="resultBarraka">
                 
                 <!-- REGRESAMOS EL TRUCO QUE DEJABA EL MÓVIL PERFECTO -->
-                <div style="transform: translateY(90px);">
+               <div class="result-offset">
                     
                     <!-- EL NÚMERO -->
                     <div id="cajaNumero" style="display: none; text-align: center; margin: 300px auto 15px; position: relative; z-index: 5;">
