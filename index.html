@@ -16,7 +16,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             font-family: 'Bebas Neue', sans-serif;
             overflow-x: hidden;
             position: relative;
@@ -90,11 +89,13 @@
             pointer-events: none; z-index: 3;
         }
 
-        /* ====== CONTENEDOR ====== */
+       /* ====== CONTENEDOR ====== */
         .container {
             z-index: 10; text-align: center; padding: 20px;
             max-width: 600px; width: 100%; position: relative;
+            margin: auto 0; 
         }
+        
         .section { display: none; }
         .section.active { display: block; animation: fadeIn 0.5s ease-out; }
 
@@ -285,7 +286,8 @@
             </div>
 
             <!-- RESULTADO FINAL -->
-            <div class="result-barraka" id="resultBarraka" style="margin-top: 40px;">
+            <!-- RESULTADO FINAL -->
+            <div class="result-barraka" id="resultBarraka">
                 <div class="result-divider"></div>
                 <div class="result-label">Su nombre en el barrio era</div>
                 <div class="result-name">BARRAKA</div>
