@@ -25,16 +25,18 @@
 
         /* ====== FONDO CON FOTO DE BARRAKA ====== */
         .barraka-bg {
-            position: fixed;
+            position: absolute; /* Antes decía fixed, absolute hace que baje con el texto */
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: 0;
             opacity: 0;
-            transition: opacity 2.5s ease;
-            background-image: url('barraka.png');
+            transition: opacity 3s ease-in-out;
+            background-image: url('barraka.png'); 
             background-size: cover;
             background-position: center top;
             background-repeat: no-repeat;
-            background-attachment: fixed;
+            /* El filtro cinematográfico */
+            filter: grayscale(100%) contrast(120%) brightness(80%);
+            mix-blend-mode: luminosity;
         }
         .barraka-bg.active {
             opacity: 0.8; /* Ajusta la opacidad de la foto aquí */
@@ -145,8 +147,13 @@
         .btn-check:hover { transform: scale(1.03); border-color: rgba(200,150,50,0.8); color: #c89632; box-shadow: 0 0 25px rgba(200,150,50,0.15); }
         .btn-check:disabled { opacity: 0.3; cursor: not-allowed; border-color: #444; color: #666; }
         
-        /* ====== RESULTADO - BARRAKA ====== */
-        .result-barraka { display: none; margin-top: 40px; opacity: 0; padding-bottom: 20px; }
+       /* ====== RESULTADO - BARRAKA ====== */
+        .result-barraka { 
+            display: none; 
+            margin-top: 200px; /* Aquí le dejamos un espacio inmenso para que pongas lo que quieras */
+            opacity: 0; 
+            padding-bottom: 20px; 
+        }
         .result-barraka.show { display: block; animation: fadeInUp 1.5s ease-out forwards; }
         .result-divider { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, rgba(200,150,50,0.5), transparent); margin: 0 auto 20px; }
         .result-label { font-size: 0.7rem; color: #666; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 10px; font-family: 'Inter', sans-serif;}
