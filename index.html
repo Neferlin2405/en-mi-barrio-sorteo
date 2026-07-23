@@ -220,14 +220,20 @@
             </div>
         </div>
 
-        <!-- ========================================== -->
+       <!-- ========================================== -->
         <!-- SECCIÓN 2: HOMENAJE Y ACERTIJO -->
         <!-- ========================================== -->
         <div id="seccionHomenaje" class="section">
             <div class="tribute-header">
                 <div class="tribute-label">En memoria de</div>
                 <div class="tribute-name">WAGNER</div>
-                <div class="tribute-sub">Barraka</div>
+                <div class="tribute-sub">Eterno Barraka</div>
+            </div>
+
+            <!-- AQUÍ ESTÁ EL NÚMERO EN SU NUEVA POSICIÓN (Oculto al inicio) -->
+            <div class="numero-box" id="cajaNumero" style="display: none; margin: 30px auto 20px; position: relative; z-index: 5;">
+                <div class="numero-label" style="color: #c89632;">Tu Número de Sorteo</div>
+                <div class="numero-sorteo" id="numeroGenerado">--</div>
             </div>
 
             <div class="acertijo-box" id="cajaAcertijo">
@@ -262,16 +268,11 @@
                 <div class="error-msg" id="errorMsg"></div>
             </div>
 
-            <!-- RESULTADO Y NÚMERO GENERADO -->
-            <div class="result-barraka" id="resultBarraka">
+            <!-- RESULTADO FINAL -->
+            <div class="result-barraka" id="resultBarraka" style="margin-top: 40px;">
                 <div class="result-divider"></div>
                 <div class="result-label">Su nombre en el barrio era</div>
                 <div class="result-name">BARRAKA</div>
-                
-                <div class="numero-box">
-                    <div class="numero-label">Tu Número de Sorteo</div>
-                    <div class="numero-sorteo" id="numeroGenerado">--</div>
-                </div>
 
                 <div class="result-message">
                     <em>"El que nunca bajó la guardia,</em><br>
@@ -356,6 +357,7 @@
                 document.getElementById('cajaAcertijo').style.display = 'none';
                 document.getElementById('zonaInteraccion').style.display = 'none';
                 document.getElementById('numeroGenerado').textContent = usuarioActual.numero;
+                document.getElementById('cajaNumero').style.display = 'block'; // <--- ESTA LÍNEA ES NUEVA
                 document.getElementById('resultBarraka').classList.add('show');
                 document.getElementById('barrakaBg').classList.add('active');
             }
@@ -414,6 +416,7 @@
                 setTimeout(() => {
                     document.getElementById('zonaInteraccion').style.display = 'none';
                     document.getElementById('cajaAcertijo').style.display = 'none';
+                    document.getElementById('cajaNumero').style.display = 'block'; // <--- ESTA LÍNEA ES NUEVA
                     document.getElementById('resultBarraka').classList.add('show');
                     document.getElementById('barrakaBg').classList.add('active');
                 }, 1000);
