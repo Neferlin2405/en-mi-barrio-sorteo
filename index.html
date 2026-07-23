@@ -10,16 +10,13 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
+       body {
             background: #111111;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             font-family: 'Bebas Neue', sans-serif;
             overflow-x: hidden;
-            position: relative;
             color: #ddd;
+            position: relative;
         }
 
         /* ====== FONDO CON FOTO DE BARRAKA ====== */
@@ -91,9 +88,13 @@
 
        /* ====== CONTENEDOR ====== */
         .container {
-            z-index: 10; text-align: center; padding: 20px;
-            max-width: 600px; width: 100%; position: relative;
-            margin: auto 0; 
+            z-index: 10; 
+            text-align: center; 
+            padding: 50px 20px 80px; /* Espacio arriba y abajo para que respire */
+            max-width: 600px; 
+            width: 100%; 
+            margin: 0 auto; /* Lo centra en medio de la pantalla */
+            position: relative;
         }
         
         .section { display: none; }
@@ -424,28 +425,29 @@
                 const numAlAzar = Math.floor(Math.random() * 20) + 1;
                 document.getElementById('numeroGenerado').textContent = numAlAzar;
 
-                // Guardar en Google Sheets
+               // Guardar localmente
                 usuarioActual.numero = numAlAzar;
-                usuarioActual.esquina = "BARRAKA"; // Guardamos Barraka como referencia en el Excel
+                usuarioActual.esquina = "BARRAKA"; // Guardamos Barraka como referencia
                 usuarioActual.fechaSorteo = new Date().toISOString();
                 localStorage.setItem('emb_usuario', JSON.stringify(usuarioActual));
 
+                // Mostrar homenaje final AL INSTANTE (sin esperar al Excel)
+                setTimeout(() => {
+                    document.getElementById('zonaInteraccion').style.display = 'none';
+                    document.getElementById('cajaAcertijo').style.display = 'none';
+                    document.getElementById('cajaNumero').style.display = 'block'; 
+                    document.getElementById('resultBarraka').classList.add('show');
+                    document.getElementById('barrakaBg').classList.add('active');
+                }, 1000);
+
+                // Mandar la info al Excel en segundo plano
                 try {
-                    await fetch(API_URL, {
+                    fetch(API_URL, {
                         method: "POST",
                         headers: { "Content-Type": "text/plain" },
                         body: JSON.stringify(usuarioActual)
                     });
                 } catch(e) { console.error("Error guardando número:", e); }
-
-                // Mostrar homenaje final
-                setTimeout(() => {
-                    document.getElementById('zonaInteraccion').style.display = 'none';
-                    document.getElementById('cajaAcertijo').style.display = 'none';
-                    document.getElementById('cajaNumero').style.display = 'block'; // <--- ESTA LÍNEA ES NUEVA
-                    document.getElementById('resultBarraka').classList.add('show');
-                    document.getElementById('barrakaBg').classList.add('active');
-                }, 1000);
 
             } else {
                 mostrarError("Esa no es la palabra. Lee bien la pista.");
@@ -457,7 +459,7 @@
                 }, 1800);
             }
         }
-
+        
         function mostrarError(msg) {
             const err = document.getElementById('errorMsg');
             err.textContent = msg; err.classList.add('show');
