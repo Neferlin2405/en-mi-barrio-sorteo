@@ -229,18 +229,7 @@
             .numero-sorteo { font-size: 4rem; }
         }
 
-       /* ====== ADAPTACIÓN PARA COMPUTADORAS / MAC ====== */
-        @media (min-width: 768px) {
-            .result-barraka {
-                margin-top: 0px !important;
-            }
-            #cajaNumero {
-                margin-top: 180px !important; /* Altura ideal en pantallas grandes */
-            }
-            .result-inline-container {
-                margin-top: 25px !important;
-            }
-        }
+       
     </style>
 </head>
 <body>
@@ -325,22 +314,27 @@
                 <div class="error-msg" id="errorMsg"></div>
             </div>
 
-         <!-- RESULTADO FINAL -->
+        <!-- RESULTADO FINAL -->
             <div class="result-barraka" id="resultBarraka">
                 
-                <!-- EL NÚMERO -->
-                <div id="cajaNumero" style="display: none; text-align: center; margin: 300px auto 15px; position: relative; z-index: 5;">
-                    <div class="numero-box">
-                        <span class="numero-label">Tu número de sorteo es:</span>
-                        <span class="numero-sorteo" id="numeroGenerado">--</span>
+                <!-- REGRESAMOS EL TRUCO QUE DEJABA EL MÓVIL PERFECTO -->
+                <div style="transform: translateY(90px);">
+                    
+                    <!-- EL NÚMERO -->
+                    <div id="cajaNumero" style="display: none; text-align: center; margin: 300px auto 15px; position: relative; z-index: 5;">
+                        <div class="numero-box">
+                            <span class="numero-label">Tu número de sorteo es:</span>
+                            <span class="numero-sorteo" id="numeroGenerado">--</span>
+                        </div>
                     </div>
-                </div>
 
-                <!-- TEXTO Y PALOMA -->
-                <div class="result-inline-container" style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 15px;">
-                    <div class="result-message" style="margin-top: 0; display: inline-block;">
-                        Descansa en paz, hermano. Tu barrio no te olvida. 🕊️
+                    <!-- TEXTO Y PALOMA -->
+                    <div class="result-inline-container" style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 15px;">
+                        <div class="result-message" style="margin-top: 0; display: inline-block;">
+                            Descansa en paz, hermano. Tu barrio no te olvida. 🕊️
+                        </div>
                     </div>
+
                 </div>
 
             </div>
