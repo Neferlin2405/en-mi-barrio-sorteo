@@ -160,11 +160,27 @@
         .result-name { font-family: 'Permanent Marker', cursive; font-size: 3.5rem; color: #c89632; text-shadow: 0 0 30px rgba(200,150,50,0.3); animation: barrakaGlow 2s ease-in-out infinite; letter-spacing: 4px; }
         @keyframes barrakaGlow { 0%, 100% { text-shadow: 0 0 20px rgba(200,150,50,0.2); } 50% { text-shadow: 0 0 40px rgba(200,150,50,0.4), 0 0 60px rgba(200,150,50,0.1); } }
         
-        /* ====== NÚMERO DE SORTEO (NUEVO) ====== */
-        .numero-sorteo { font-size: 5rem; color: #eee; margin: 15px 0; text-shadow: 0 0 20px rgba(255,255,255,0.2); line-height: 1; }
-        .numero-label { font-size: 0.8rem; color: #888; letter-spacing: 5px; text-transform: uppercase; margin-top: 5px; font-family: 'Inter', sans-serif;}
-        .numero-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 8px; margin: 20px auto; max-width: 250px; }
-
+       /* ====== NÚMERO DE SORTEO (REDISEÑADO) ====== */
+        .numero-box { 
+            background: rgba(255,255,255,0.03); 
+            border: 1px solid rgba(255,255,255,0.15); 
+            padding: 10px 30px; 
+            border-radius: 50px; /* Borde muy redondeado para que sea un rectángulo suave */
+            display: inline-flex; /* Esto pone el texto y el número uno al lado del otro */
+            align-items: center; 
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .numero-label { 
+            font-size: 0.85rem; color: #888; letter-spacing: 3px; 
+            text-transform: uppercase; font-family: 'Inter', sans-serif; 
+            margin-right: 15px; /* Separación entre el texto y el número */
+        }
+        .numero-sorteo { 
+            font-size: 2.5rem; color: #c89632; 
+            text-shadow: 0 0 15px rgba(200,150,50,0.3); 
+            line-height: 1; 
+        }
         .result-message { font-family: 'Inter', sans-serif; font-size: 0.9rem; color: #888; margin-top: 30px; line-height: 1.8; max-width: 420px; margin-left: auto; margin-right: auto; }
         .result-message em { color: #c89632; font-style: normal; }
         .result-footer { font-size: 0.7rem; color: #555; letter-spacing: 3px; text-transform: uppercase; margin-top: 25px; font-family: 'Inter', sans-serif;}
@@ -230,14 +246,17 @@
                 <div class="tribute-sub">Eterno Barraka</div>
             </div>
 
-            <!-- AQUÍ ESTÁ EL NÚMERO EN SU NUEVA POSICIÓN (Oculto al inicio) -->
-            <div class="numero-box" id="cajaNumero" style="display: none; margin: 30px auto 20px; position: relative; z-index: 5;">
-                <div class="numero-label" style="color: #c89632;">Tu Número de Sorteo</div>
-                <div class="numero-sorteo" id="numeroGenerado">--</div>
+            <!-- AQUÍ ESTÁ EL NÚMERO EN SU NUEVA POSICIÓN Y DISEÑO -->
+            <div id="cajaNumero" style="display: none; text-align: center; margin: 30px auto 20px; position: relative; z-index: 5;">
+                <div class="numero-box">
+                    <span class="numero-label">Tu número de sorteo es:</span>
+                    <span class="numero-sorteo" id="numeroGenerado">--</span>
+                </div>
             </div>
 
             <div class="acertijo-box" id="cajaAcertijo">
                 <div class="acertijo-label">📝 Demuestra que eres del barrio</div>
+                
                 <div class="acertijo-text">
                     <strong>"Soy el que partió rimas desde el barrio,</strong><br>
                     <strong>mi nombre es de un maestro de la ópera,</strong><br>
