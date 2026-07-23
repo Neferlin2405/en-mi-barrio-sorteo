@@ -128,23 +128,41 @@
         .acertijo-text { font-family: 'Inter', sans-serif; font-size: 0.9rem; color: #aaa; line-height: 1.8; font-style: italic; }
         .acertijo-text strong { color: #ddd; font-weight: 600; }
 
-        /* ====== LETRAS ====== */
+        /* ====== LETRAS INTERACTIVAS ====== */
         .letters-label { font-size: 0.65rem; color: #666; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 12px; font-family: 'Inter', sans-serif;}
         .letters-container { display: flex; justify-content: center; gap: 10px; margin: 15px 0 25px; flex-wrap: wrap; }
-        .letter-box { width: 58px; height: 70px; background: rgba(255,255,255,0.04); border: 2px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 2.2rem; color: #ddd; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative; }
+        
+        /* Ahora las letras son inputs interactivos */
+        .letter-box { 
+            width: 58px; height: 70px; 
+            background: rgba(255,255,255,0.04); 
+            border: 2px solid rgba(255,255,255,0.15); 
+            display: flex; align-items: center; justify-content: center; 
+            font-size: 2.2rem; color: #ddd; 
+            transition: all 0.3s ease; 
+            position: relative; 
+            text-align: center;
+            text-transform: uppercase;
+            outline: none;
+            font-family: 'Bebas Neue', sans-serif;
+            border-radius: 0; /* Por si en móviles se redondea */
+            padding: 0;
+        }
+        .letter-box:focus {
+            border-color: rgba(200,150,50,0.8);
+            background: rgba(200,150,50,0.1);
+            box-shadow: 0 0 15px rgba(200,150,50,0.2);
+        }
         .letter-box.hint { border-color: rgba(200,150,50,0.5); background: rgba(200,150,50,0.08); color: #c89632; box-shadow: 0 0 15px rgba(200,150,50,0.1); }
         .letter-box.correct { border-color: rgba(100,200,100,0.5); background: rgba(100,200,100,0.08); color: #6c6; box-shadow: 0 0 15px rgba(100,200,100,0.1); animation: letterCorrect 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
         .letter-box.wrong { border-color: rgba(200,80,80,0.4); animation: shake 0.4s ease; }
+        
         @keyframes letterCorrect { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
         @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
         .letter-hint-label { position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); font-size: 0.5rem; color: #666; letter-spacing: 1px; text-transform: uppercase; white-space: nowrap; font-family: 'Inter', sans-serif;}
 
-        /* ====== INPUT Y BOTÓN ====== */
-        .input-area { margin: 20px 0; }
-        .word-input { width: 100%; max-width: 380px; background: rgba(255,255,255,0.05); border: 2px solid rgba(255,255,255,0.15); padding: 14px 20px; color: #ddd; font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 10px; text-align: center; text-transform: uppercase; outline: none; transition: all 0.3s ease; }
-        .word-input:focus { border-color: rgba(200,150,50,0.5); background: rgba(200,150,50,0.05); box-shadow: 0 0 20px rgba(200,150,50,0.1); }
-        .word-input.success { border-color: rgba(100,200,100,0.5); background: rgba(100,200,100,0.05); color: #6c6; }
-        .btn-check { background: transparent; color: #ddd; border: 2px solid #ddd; padding: 14px 50px; font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 5px; cursor: pointer; margin-top: 15px; transition: all 0.3s ease; text-transform: uppercase; }
+        /* ====== BOTÓN ====== */
+        .btn-check { background: transparent; color: #ddd; border: 2px solid #ddd; padding: 14px 50px; font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 5px; cursor: pointer; margin-top: 5px; transition: all 0.3s ease; text-transform: uppercase; }
         .btn-check:hover { transform: scale(1.03); border-color: rgba(200,150,50,0.8); color: #c89632; box-shadow: 0 0 25px rgba(200,150,50,0.15); }
         .btn-check:disabled { opacity: 0.3; cursor: not-allowed; border-color: #444; color: #666; }
         
@@ -218,7 +236,6 @@
         @media (max-width: 480px) {
             .letter-box { width: 45px; height: 56px; font-size: 1.7rem; }
             .tribute-name { font-size: 1.7rem; }
-            .word-input { font-size: 1.3rem; letter-spacing: 6px; }
             .numero-sorteo { font-size: 4rem; }
         }
 
@@ -257,12 +274,10 @@
         <!-- ========================================== -->
         <div id="seccionRegistro" class="section active">
             
-            <!-- EL LOGO REDUCIMOS UN POQUITO EL MARGEN ABAJO -->
             <div style="text-align: center; margin: 15px auto 10px auto;">
                 <img src="LOGO EMB BLANCO.png" alt="Logo En Mi Barrio" style="max-width: 190px; width: 100%; height: auto; display: block; margin: 0 auto;">
             </div>
             
-            <!-- AQUÍ REGRESAMOS LA FRASE "EN MI BARRIO" -->
             <div class="logo-text">EN MI BARRIO</div>
             
             <div class="logo-sub">Sorteo Documental</div>
@@ -295,12 +310,10 @@
         <!-- ========================================== -->
         <div id="seccionHomenaje" class="section">
             
-            <!-- EL LOGO SOLO PARA LA PESTAÑA 2 (Desaparecerá al ganar) -->
             <div id="logoAcertijo" style="text-align: center; margin: 15px auto 30px auto;">
                 <img src="LOGO EMB BLANCO.png" alt="Logo En Mi Barrio" style="max-width: 170px; width: 100%; height: auto; display: block; margin: 0 auto;">
             </div>
 
-            <!-- EL TEXTO DE WAGNER ORIGINAL PARA LA PESTAÑA 3 (Oculto al inicio) -->
             <div id="headerWagner" class="tribute-header" style="display: none;">
                 <div class="tribute-label">En memoria de</div>
                 <div class="tribute-name">WAGNER</div>
@@ -310,30 +323,31 @@
             <div class="acertijo-box" id="cajaAcertijo">
                 <div class="acertijo-label">📝 Demuestra que eres del barrio</div>
                 
+                <!-- NUEVO ACERTIJO ACTUALIZADO -->
                 <div class="acertijo-text">
-                    <strong>"Soy el que partió rimas desde el barrio,</strong><br>
-                    <strong>mi nombre es de un maestro de la ópera,</strong><br>
-                    <strong>pero en las calles me gritaban distinto.</strong><br>
-                    <strong>Como el arma que nunca falla,</strong><br>
-                    <strong>así era mi flow cuando subía al escenario.</strong><br>
-                    <strong>6 letras tengo, la primera es W,</strong><br>
-                    <strong>y mi apodo suena a guerra en el asfalto."</strong>
+                    <strong>"Bueno en un 4x4 pero para moverse ..usaba 2x2 mas 1</strong><br>
+                    <strong>De lacio a ondulado, de ondulado a lacio lo viste seguro</strong><br>
+                    <strong>Brazos con tinta como acabando de pintar un recuerdo,</strong><br>
+                    <strong>nunca te negó un abrazo con una sonrisa de por medio.</strong><br>
+                    <strong>Mi nombre 6 días mi segundo nombre una semana</strong><br>
+                    <strong>Si sabes quién soy ya llevas en ti algo de ventana"</strong>
                 </div>
             </div>
 
             <div id="zonaInteraccion">
                 <div class="letters-label">Adivina la palabra</div>
+                
+                <!-- CAJAS DE TEXTO INTERACTIVAS DIRECTAS -->
                 <div class="letters-container">
-                    <div class="letter-box hint" id="box-0">W<span class="letter-hint-label">Pista</span></div>
-                    <div class="letter-box" id="box-1">_</div>
-                    <div class="letter-box" id="box-2">_</div>
-                    <div class="letter-box" id="box-3">_</div>
-                    <div class="letter-box" id="box-4">_</div>
-                    <div class="letter-box" id="box-5">_</div>
-                </div>
-
-                <div class="input-area">
-                    <input type="text" class="word-input" id="wordInput" placeholder="ESCRIBE AQUÍ" maxlength="6" oninput="validarInput(this)" onkeypress="if(event.key==='Enter')verificar()">
+                    <div style="position: relative;">
+                        <input type="text" class="letter-box hint" id="box-0" maxlength="1" oninput="moverFoco(this, 1)" onkeydown="borrarFoco(event, this, null)">
+                        <span class="letter-hint-label">Pista</span>
+                    </div>
+                    <input type="text" class="letter-box" id="box-1" maxlength="1" oninput="moverFoco(this, 2)" onkeydown="borrarFoco(event, this, 0)">
+                    <input type="text" class="letter-box" id="box-2" maxlength="1" oninput="moverFoco(this, 3)" onkeydown="borrarFoco(event, this, 1)">
+                    <input type="text" class="letter-box" id="box-3" maxlength="1" oninput="moverFoco(this, 4)" onkeydown="borrarFoco(event, this, 2)">
+                    <input type="text" class="letter-box" id="box-4" maxlength="1" oninput="moverFoco(this, 5)" onkeydown="borrarFoco(event, this, 3)">
+                    <input type="text" class="letter-box" id="box-5" maxlength="1" oninput="moverFoco(this, null)" onkeydown="borrarFoco(event, this, 4)">
                 </div>
 
                 <button class="btn-check" id="btnCheck" onclick="verificar()">VERIFICAR</button>
@@ -433,9 +447,11 @@
             document.getElementById('seccionRegistro').classList.remove('active');
             document.getElementById('seccionHomenaje').classList.add('active');
 
+            // Foco inicial en la primera caja
+            setTimeout(() => { if (!acertado) document.getElementById('box-0').focus(); }, 500);
+
             if (usuarioActual && usuarioActual.numero) {
                 acertado = true;
-                // AL TENER EL NÚMERO (PESTAÑA 3): Ocultamos logo, mostramos nombre de Wagner
                 document.getElementById('logoAcertijo').style.display = 'none';
                 document.getElementById('headerWagner').style.display = 'block';
 
@@ -448,33 +464,63 @@
             }
         }
 
-        function validarInput(input) {
-            input.value = input.value.toUpperCase().replace(/[^A-Z]/g, '');
+        /* ====== LOGICA DE LAS CAJAS INTERACTIVAS ====== */
+        function moverFoco(elemento, siguienteId) {
+            // Forzar mayúsculas y solo letras
+            elemento.value = elemento.value.toUpperCase().replace(/[^A-Z]/g, '');
             document.getElementById('errorMsg').classList.remove('show');
+            
+            // Si escribió algo y hay un siguiente cuadro, saltar a él
+            if (elemento.value.length === 1 && siguienteId !== null) {
+                document.getElementById('box-' + siguienteId).focus();
+            }
+        }
+
+        function borrarFoco(evento, elemento, anteriorId) {
+            // Si presiona retroceso estando vacío, saltar al cuadro anterior
+            if (evento.key === 'Backspace' && elemento.value === '' && anteriorId !== null) {
+                document.getElementById('box-' + anteriorId).focus();
+            }
+            // Si presiona enter en cualquier cuadro
+            if (evento.key === 'Enter') {
+                verificar();
+            }
         }
 
         async function verificar() {
             if (acertado) return;
-            const input = document.getElementById('wordInput');
-            const palabra = input.value.toUpperCase().trim();
-
-            if (palabra.length !== 6) {
-                mostrarError("Debes escribir 6 letras"); return;
+            
+            // Unir lo que el usuario escribió en las 6 cajas
+            let palabra = "";
+            for(let i = 0; i < 6; i++) {
+                palabra += document.getElementById(`box-${i}`).value.toUpperCase();
             }
 
+            if (palabra.length !== 6) {
+                mostrarError("Debes llenar las 6 letras"); return;
+            }
+
+            // Colorear cada caja según si la letra es correcta o no
             for (let i = 0; i < 6; i++) {
                 const box = document.getElementById(`box-${i}`);
-                const letra = palabra[i] || '_';
-                box.textContent = letra;
-                box.classList.remove('correct', 'wrong');
-                if (i === 0) box.classList.add('hint');
-                else if (letra === PALABRA_SECRETA[i]) box.classList.add('correct');
-                else box.classList.add('wrong');
+                const letra = palabra[i];
+                box.classList.remove('correct', 'wrong', 'hint');
+                
+                if (letra === PALABRA_SECRETA[i]) {
+                    box.classList.add('correct');
+                } else {
+                    box.classList.add('wrong');
+                }
             }
 
             if (palabra === PALABRA_SECRETA) {
                 acertado = true;
-                input.classList.add('success'); input.disabled = true;
+                
+                // Desactivar las cajas para que ya no escriban
+                for(let i = 0; i < 6; i++) {
+                    document.getElementById(`box-${i}`).disabled = true;
+                }
+                
                 document.getElementById('btnCheck').style.display = 'none';
                 document.getElementById('errorMsg').classList.remove('show');
                 
@@ -487,7 +533,6 @@
                 localStorage.setItem('emb_usuario', JSON.stringify(usuarioActual));
 
                 setTimeout(() => {
-                    // AL GANAR (PASO A PESTAÑA 3): Ocultamos logo, mostramos Wagner
                     document.getElementById('logoAcertijo').style.display = 'none';
                     document.getElementById('headerWagner').style.display = 'block';
 
@@ -509,10 +554,18 @@
             } else {
                 mostrarError("Esa no es la palabra. Lee bien la pista.");
                 setTimeout(() => {
-                    for (let i = 1; i < 6; i++) {
+                    for (let i = 0; i < 6; i++) {
                         const box = document.getElementById(`box-${i}`);
-                        box.textContent = '_'; box.classList.remove('correct', 'wrong');
+                        box.classList.remove('correct', 'wrong');
+                        // Borrar las letras y dejarlo listo para intentar de nuevo
+                        if (i === 0) {
+                            box.classList.add('hint');
+                        } else {
+                            box.value = '';
+                        }
                     }
+                    // Regresar el cursor a la caja 1
+                    document.getElementById('box-1').focus();
                 }, 1800);
             }
         }
