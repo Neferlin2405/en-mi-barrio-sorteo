@@ -86,11 +86,11 @@
             pointer-events: none; z-index: 3;
         }
 
-       /* ====== CONTENEDOR ====== */
+      /* ====== CONTENEDOR ====== */
         .container {
             z-index: 10; 
             text-align: center; 
-            padding: 60px 20px 140px; /* <--- Aumentamos el espacio inferior aquí */
+            padding: 60px 20px 80px; /* <--- Lo regresamos a 80px para que el footer no baje más */
             max-width: 600px; 
             width: 100%; 
             position: relative;
@@ -315,19 +315,24 @@
           <!-- RESULTADO FINAL -->
             <div class="result-barraka" id="resultBarraka">
                 
-                <!-- EL NÚMERO BAJA MÁS (Cambiamos a 360px) -->
-                <div id="cajaNumero" style="display: none; text-align: center; margin: 360px auto 15px; position: relative; z-index: 5;">
-                    <div class="numero-box">
-                        <span class="numero-label">Tu número de sorteo es:</span>
-                        <span class="numero-sorteo" id="numeroGenerado">--</span>
+                <!-- BAJAMOS EL NÚMERO Y LA FRASE USANDO TRANSFORM -->
+                <div style="transform: translateY(45px);">
+                    
+                    <!-- EL NÚMERO -->
+                    <div id="cajaNumero" style="display: none; text-align: center; margin: 300px auto 15px; position: relative; z-index: 5;">
+                        <div class="numero-box">
+                            <span class="numero-label">Tu número de sorteo es:</span>
+                            <span class="numero-sorteo" id="numeroGenerado">--</span>
+                        </div>
                     </div>
-                </div>
 
-                <!-- TEXTO Y PALOMA BAJAN CON EL NÚMERO -->
-                <div class="result-inline-container" style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 15px;">
-                    <div class="result-message" style="margin-top: 0; display: inline-block;">
-                        Descansa en paz, hermano. Tu barrio no te olvida. 🕊️
+                    <!-- TEXTO Y PALOMA -->
+                    <div class="result-inline-container" style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 15px;">
+                        <div class="result-message" style="margin-top: 0; display: inline-block;">
+                            Descansa en paz, hermano. Tu barrio no te olvida. 🕊️
+                        </div>
                     </div>
+
                 </div>
 
             </div>
