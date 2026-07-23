@@ -229,6 +229,18 @@
             .numero-sorteo { font-size: 4rem; }
         }
 
+        /* ====== ADAPTACIÓN PARA COMPUTADORAS / MAC ====== */
+        @media (min-width: 768px) {
+            .resultado-contenido {
+                margin-top: 45vh; /* Ajusta qué tan abajo va el texto en la Mac */
+            }
+            .barrka-bg {
+                background-size: contain !important; /* Hace que la foto completa encaje sin estirarse de más */
+                background-repeat: no-repeat !important;
+                background-position: center top !important; /* La centra arriba en la pantalla grande */
+            }
+        }
+
        
     </style>
 </head>
