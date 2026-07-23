@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -22,7 +21,7 @@
 
         /* ====== FONDO CON FOTO DE BARRAKA ====== */
         .barraka-bg {
-            position: absolute; /* Antes decía fixed, absolute hace que baje con el texto */
+            position: absolute; 
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: 0;
             opacity: 0;
@@ -31,12 +30,11 @@
             background-size: cover;
             background-position: center 120px;
             background-repeat: no-repeat;
-            /* El filtro cinematográfico */
             filter: grayscale(100%) contrast(120%) brightness(80%);
             mix-blend-mode: luminosity;
         }
         .barraka-bg.active {
-            opacity: 0.8; /* Ajusta la opacidad de la foto aquí */
+            opacity: 0.8; 
         }
         .barraka-bg::after {
             content: '';
@@ -91,7 +89,7 @@
         .container {
             z-index: 10; 
             text-align: center; 
-            padding: 60px 20px 80px; /* <--- Lo regresamos a 80px para que el footer no baje más */
+            padding: 60px 20px 80px; 
             max-width: 600px; 
             width: 100%; 
             position: relative;
@@ -102,7 +100,6 @@
         .section.active { display: block; animation: fadeIn 0.5s ease-out; }
 
         /* ====== ESTILOS DE REGISTRO ====== */
-        .logo-text { font-family: 'Permanent Marker', cursive; font-size: 2.5rem; color: #eee; letter-spacing: 3px; margin-bottom: 5px; }
         .logo-sub { font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem; color: #888; letter-spacing: 8px; text-transform: uppercase; margin-bottom: 25px; }
         .registro-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.12); padding: 28px 25px 32px; position: relative; overflow: hidden; }
         .registro-title { font-size: 1.3rem; color: #ccc; letter-spacing: 5px; margin-bottom: 22px; text-transform: uppercase; }
@@ -117,12 +114,6 @@
         .status-msg { font-size: 0.8rem; letter-spacing: 2px; margin-top: 10px; padding: 8px; display: none; font-family: 'Inter', sans-serif; }
         .status-msg.show { display: block; }
         .status-msg.info { color: #88c; }
-
-        /* ====== HEADER HOMENAJE ====== */
-        .tribute-header { margin-bottom: 30px; }
-        .tribute-label { font-size: 0.7rem; color: #666; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 8px; font-family: 'Inter', sans-serif; }
-        .tribute-name { font-family: 'Permanent Marker', cursive; font-size: 2.2rem; color: #eee; text-shadow: 0 0 20px rgba(255,255,255,0.1); letter-spacing: 3px; }
-        .tribute-sub { font-size: 0.8rem; color: #555; letter-spacing: 4px; margin-top: 5px; font-family: 'Inter', sans-serif; }
 
         /* ====== ACERTIJO ====== */
         .acertijo-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-left: 3px solid rgba(200,150,50,0.4); padding: 22px 28px; margin: 0 0 30px 0; text-align: left; position: relative; }
@@ -153,7 +144,7 @@
        /* ====== RESULTADO - BARRAKA ====== */
         .result-barraka { 
             display: none; 
-            margin-top: 280px; /* Esto empuja todo el bloque final hacia abajo de la foto */
+            margin-top: 280px; 
             opacity: 0; 
             padding-bottom: 40px; 
         }
@@ -167,11 +158,11 @@
         .result-name { font-family: 'Permanent Marker', cursive; font-size: 3.5rem; color: #c89632; text-shadow: 0 0 30px rgba(200,150,50,0.3); animation: barrakaGlow 2s ease-in-out infinite; letter-spacing: 4px; }
         @keyframes barrakaGlow { 0%, 100% { text-shadow: 0 0 20px rgba(200,150,50,0.2); } 50% { text-shadow: 0 0 40px rgba(200,150,50,0.4), 0 0 60px rgba(200,150,50,0.1); } }
         
-       /* ====== NÚMERO DE SORTEO (REDISEÑADO Y PEQUEÑO) ====== */
+       /* ====== NÚMERO DE SORTEO ====== */
         .numero-box { 
             background: rgba(255,255,255,0.03); 
             border: 1px solid rgba(255,255,255,0.15); 
-            padding: 8px 18px; /* Relleno más pequeño */
+            padding: 8px 18px; 
             border-radius: 40px; 
             display: inline-flex; 
             align-items: center; 
@@ -179,7 +170,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
         .numero-label { 
-            font-size: 0.65rem; /* Texto más pequeño */
+            font-size: 0.65rem; 
             color: #888; 
             letter-spacing: 2px; 
             text-transform: uppercase; 
@@ -187,7 +178,7 @@
             margin-right: 12px; 
         }
         .numero-sorteo { 
-            font-size: 1.6rem; /* Número más pequeño */
+            font-size: 1.6rem; 
             color: #c89632; 
             text-shadow: 0 0 10px rgba(200,150,50,0.3); 
             line-height: 1; 
@@ -195,10 +186,10 @@
         
         .result-message { 
             font-family: 'Inter', sans-serif; 
-            font-size: 0.75rem; /* Letra más pequeña */
+            font-size: 0.75rem; 
             color: #888; 
             margin-top: 15px; 
-            line-height: 1.3; /* Líneas mucho más pegadas */
+            line-height: 1.3; 
             max-width: 420px; 
             margin-left: auto; 
             margin-right: auto; 
@@ -213,7 +204,7 @@
             padding-top: 15px; 
             border-top: 1px solid rgba(255,255,255,0.06); 
             font-size: 0.65rem; 
-            color: #555; /* Un poquito más visible para que luzca bien */
+            color: #555; 
             letter-spacing: 3px; 
             text-transform: uppercase; 
             font-family: 'Inter', sans-serif;
@@ -225,39 +216,29 @@
         @media (max-width: 480px) {
             .letter-box { width: 45px; height: 56px; font-size: 1.7rem; }
             .result-name { font-size: 2.5rem; }
-            .tribute-name { font-size: 1.7rem; }
             .word-input { font-size: 1.3rem; letter-spacing: 6px; }
             .numero-sorteo { font-size: 4rem; }
         }
 
-                /* ====== OFFSET PARA MÓVIL (mantiene posición original) ====== */
+        /* ====== OFFSET PARA MÓVIL ====== */
         .result-offset { transform: translateY(90px); }
 
-        /* ====== AJUSTES PARA PC (pantallas anchas) ====== */
+        /* ====== AJUSTES PARA PC ====== */
         @media (min-width: 769px) {
-            /* En PC: más espacio proporcional, pero no exagerado */
             .result-barraka {
                 margin-top: 420px;
             }
-
-            /* En PC: la caja del número sin margen enorme */
             #cajaNumero {
                 margin: 20px auto 15px !important;
             }
-
-            /* En PC: anular el translateY del offset */
             .result-offset {
                 transform: translateY(0) !important;
             }
-
-            /* En PC: la foto de fondo cubre toda la pantalla como en móvil */
             .barraka-bg {
                 background-position: center 80px;
                 height: 100%;
             }
         }
-
-       
     </style>
 </head>
 <body>
@@ -270,10 +251,13 @@
     <div class="container">
         
         <!-- ========================================== -->
-        <!-- SECCIÓN 1: REGISTRO -->
+        <!-- PESTAÑA 1: REGISTRO -->
         <!-- ========================================== -->
         <div id="seccionRegistro" class="section active">
-            <div class="logo-text">EN MI BARRIO</div>
+            <!-- AQUÍ ESTÁ TU LOGO CON ESPACIO HACIA ABAJO -->
+            <div style="text-align: center; margin: 20px auto 35px auto;">
+                <img src="LOGO EMB BLANCO.png" alt="Logo En Mi Barrio" style="max-width: 190px; width: 100%; height: auto; display: block; margin: 0 auto;">
+            </div>
             <div class="logo-sub">Sorteo Documental</div>
             <div class="registro-card">
                 <div class="registro-title">Ingresa tus datos</div>
@@ -300,13 +284,13 @@
         </div>
 
        <!-- ========================================== -->
-        <!-- SECCIÓN 2: HOMENAJE Y ACERTIJO -->
+        <!-- PESTAÑA 2: HOMENAJE Y ACERTIJO -->
         <!-- ========================================== -->
         <div id="seccionHomenaje" class="section">
-            <div class="tribute-header">
-                <div class="tribute-label">En memoria de</div>
-                <div class="tribute-name">WAGNER</div>
-                <div class="tribute-sub">Barraka</div>
+            
+            <!-- AQUÍ ESTÁ TU LOGO REEMPLAZANDO EL SPOILER DE WAGNER -->
+            <div style="text-align: center; margin: 15px auto 30px auto;">
+                <img src="LOGO EMB BLANCO.png" alt="Logo En Mi Barrio" style="max-width: 170px; width: 100%; height: auto; display: block; margin: 0 auto;">
             </div>
 
             <div class="acertijo-box" id="cajaAcertijo">
@@ -342,10 +326,11 @@
                 <div class="error-msg" id="errorMsg"></div>
             </div>
 
-        <!-- RESULTADO FINAL -->
+        <!-- ========================================== -->
+        <!-- PESTAÑA 3: RESULTADO FINAL (INTACTA) -->
+        <!-- ========================================== -->
             <div class="result-barraka" id="resultBarraka">
                 
-                <!-- REGRESAMOS EL TRUCO QUE DEJABA EL MÓVIL PERFECTO -->
                <div class="result-offset">
                     
                     <!-- EL NÚMERO -->
@@ -369,20 +354,17 @@
             
             </div> <!-- Fin de result-barraka -->
             
-
         </div> <!-- Fin de container -->
 
-    <!-- EL FOOTER AHORA VA FUERA Y ABAJO DEL TODO -->
+    <!-- EL FOOTER -->
     <div class="footer">Proyecto Documental Freestyle Perú · En Mi Barrio</div>
 
     <script>
-        // === CONFIGURACIÓN ===
         const API_URL = "https://script.google.com/macros/s/AKfycbwAaxdVpFW_M5atX1BqAQJKwttKUFQkXoXZki626bJ3n45pxMtxze7BITXLu6Ro1vcbkQ/exec";
         const PALABRA_SECRETA = "WAGNER";
         let usuarioActual = null;
         let acertado = false;
 
-        // === AUTO-LOGIN ===
         window.onload = function() {
             const guardado = localStorage.getItem('emb_usuario');
             if (guardado) {
@@ -391,7 +373,6 @@
             }
         };
 
-        // === 1. REGISTRO ===
         async function registrarUsuario(event) {
             event.preventDefault();
             document.querySelectorAll('.form-error').forEach(e => e.classList.remove('show'));
@@ -438,19 +419,17 @@
             document.getElementById('seccionRegistro').classList.remove('active');
             document.getElementById('seccionHomenaje').classList.add('active');
 
-            // Si ya tenía número guardado, mostrar resultado directo
             if (usuarioActual && usuarioActual.numero) {
                 acertado = true;
                 document.getElementById('cajaAcertijo').style.display = 'none';
                 document.getElementById('zonaInteraccion').style.display = 'none';
                 document.getElementById('numeroGenerado').textContent = usuarioActual.numero;
-                document.getElementById('cajaNumero').style.display = 'block'; // <--- ESTA LÍNEA ES NUEVA
+                document.getElementById('cajaNumero').style.display = 'block'; 
                 document.getElementById('resultBarraka').classList.add('show');
                 document.getElementById('barrakaBg').classList.add('active');
             }
         }
 
-        // === 2. LÓGICA DEL ACERTIJO ===
         function validarInput(input) {
             input.value = input.value.toUpperCase().replace(/[^A-Z]/g, '');
             document.getElementById('errorMsg').classList.remove('show');
@@ -481,17 +460,14 @@
                 document.getElementById('btnCheck').style.display = 'none';
                 document.getElementById('errorMsg').classList.remove('show');
                 
-                // Generar número del 1 al 20
                 const numAlAzar = Math.floor(Math.random() * 20) + 1;
                 document.getElementById('numeroGenerado').textContent = numAlAzar;
 
-               // Guardar localmente
                 usuarioActual.numero = numAlAzar;
-                usuarioActual.esquina = "BARRAKA"; // Guardamos Barraka como referencia
+                usuarioActual.esquina = "BARRAKA"; 
                 usuarioActual.fechaSorteo = new Date().toISOString();
                 localStorage.setItem('emb_usuario', JSON.stringify(usuarioActual));
 
-                // Mostrar homenaje final AL INSTANTE (sin esperar al Excel)
                 setTimeout(() => {
                     document.getElementById('zonaInteraccion').style.display = 'none';
                     document.getElementById('cajaAcertijo').style.display = 'none';
@@ -500,7 +476,6 @@
                     document.getElementById('barrakaBg').classList.add('active');
                 }, 1000);
 
-                // Mandar la info al Excel en segundo plano
                 try {
                     fetch(API_URL, {
                         method: "POST",
