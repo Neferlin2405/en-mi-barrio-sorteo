@@ -314,20 +314,25 @@
 
            <!-- RESULTADO FINAL -->
             <div class="result-barraka" id="resultBarraka">
-                <div class="result-message" style="margin-top: 250px;">
-                    Descansa en paz, hermano.<br>
-                    Tu barrio no te olvida.
-                </div>
-                <div class="result-footer" style="margin: 15px 0 20px 0;">🕊️</div>
-
-                <!-- EL NÚMERO EN LA BASE -->
-                <div id="cajaNumero" style="display: none; text-align: center; margin: 0 auto; position: relative; z-index: 5;">
+                
+                <!-- EL NÚMERO SE QUEDA EN SU POSICIÓN ACTUAL -->
+                <div id="cajaNumero" style="display: none; text-align: center; margin: 240px auto 15px; position: relative; z-index: 5;">
                     <div class="numero-box">
                         <span class="numero-label">Tu número de sorteo es:</span>
                         <span class="numero-sorteo" id="numeroGenerado">--</span>
                     </div>
                 </div>
+
+                <!-- TEXTO Y PALOMA JUNTOS EN LÍNEA DEBAJO DEL NÚMERO -->
+                <div class="result-inline-container" style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 15px;">
+                    <div class="result-message" style="margin-top: 0; display: inline-block;">
+                        Descansa en paz, hermano. Tu barrio no te olvida.
+                    </div>
+                    <div class="result-footer" style="margin: 0; display: inline-block; font-size: 0.9rem;">🕊️</div>
+                </div>
+
             </div> <!-- Fin de result-barraka -->
+            
 
         </div> <!-- Fin de container -->
 
